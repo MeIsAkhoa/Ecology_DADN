@@ -32,7 +32,7 @@ const Sidebar = () => {
         <Link
           to="/config"
           className={nav_Button({
-            variant: location.pathname === "/Config" ? "chosen" : "unchosen",
+            variant: location.pathname === "/config" ? "chosen" : "unchosen",
           })}
         >
           <Settings className="w-5 h-5" />

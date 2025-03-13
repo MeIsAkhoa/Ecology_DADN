@@ -8,6 +8,7 @@ import "./App.css";
 import Config from "./pages/config";
 import CurrentData from "./pages/data_page";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import Register from "./pages/register";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/config" element={<Config />} />
               <Route path="/currentData" element={<CurrentData />} />
+              <Route path="/register" element={<Register />} />
             </Routes>
           </div>
         </div>
