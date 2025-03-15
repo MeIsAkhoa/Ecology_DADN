@@ -7,24 +7,29 @@ import Login from "./pages/login";
 import "./App.css";
 import Config from "./pages/config";
 import CurrentData from "./pages/data_page";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import Register from "./pages/register";
 
 const App = () => {
   return (
-    <Router>
-      <div className="flex">
-        <Sidebar />
-        <div className="flex-1 p-6">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/login" element={<Login/>} />
-            <Route path="/config" element={<Config/>} />
-            <Route path="/currentData" element={<CurrentData/>} />
-          </Routes>
+    <GoogleOAuthProvider  clientId="918105208926-vc3sjjcr244asgnu6fvfbqirmjk2fum1.apps.googleusercontent.com">
+      <Router>
+        <div className="flex">
+          <Sidebar />
+          <div className="flex-1 p-6">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/config" element={<Config />} />
+              <Route path="/currentData" element={<CurrentData />} />
+              <Route path="/register" element={<Register />} />
+            </Routes>
+          </div>
         </div>
-      </div>
-    </Router>
+      </Router>
+    </GoogleOAuthProvider>
   );
 };
 

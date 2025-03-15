@@ -7,7 +7,7 @@ const Sidebar = () => {
 
   return (
     <div className="h-screen w-64 bg-gray-900 text-black flex flex-col p-5 bg-white">
-        {/* <h1 className="text-2xl font-bold">Ecology Dashboard</h1> */}
+
       <nav className="flex flex-col space-y-4">
         <Link
           to="/"
@@ -32,7 +32,7 @@ const Sidebar = () => {
         <Link
           to="/config"
           className={nav_Button({
-            variant: location.pathname === "/Config" ? "chosen" : "unchosen",
+            variant: location.pathname === "/config" ? "chosen" : "unchosen",
           })}
         >
           <Settings className="w-5 h-5" />
