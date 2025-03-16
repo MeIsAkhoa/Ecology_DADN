@@ -1,42 +1,46 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import coverImage from "../assets/cover.png";
+
+// Schema validation với Zod
+const registerSchema = z.object({
+  username: z.string().min(1, "Username is required"),
+  email: z.string().email("Invalid email format"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+  confirmPassword: z.string().min(6, "Confirm password must be at least 6 characters"),
+  firstname: z.string().min(1, "First name is required"),
+  lastname: z.string().min(1, "Last name is required"),
+  gender: z.enum(["nam", "nu", "khac"]),
+  phonenum: z.string().min(10, "Phone number must be at least 10 digits"),
+  dob: z.string().min(1, "Date of birth is required"),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords do not match",
+  path: ["confirmPassword"],
+});
+
+type RegisterFormInputs = z.infer<typeof registerSchema>;
 
 const Register = () => {
   const navigate = useNavigate();
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  // State lưu trữ thông tin form
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-    confirmPassword: "",
-    email: "",
-    firstname: "",
-    lastname: "",
-    gender: "nam",
-    phonenum: "",
-    dob: ""
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFormInputs>({
+    resolver: zodResolver(registerSchema),
   });
 
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false); // Trạng thái loading
-
-  // Xử lý thay đổi input
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  // Xử lý khi nhấn nút "Sign Up"
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Kiểm tra password và confirmPassword có khớp không
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match!");
-      return;
-    }
-
-    setLoading(true); // Bật trạng thái loading
+  // Xử lý khi nhấn "Sign Up"
+  const onSubmit = async (formData: RegisterFormInputs) => {
+    setLoading(true);
+    setError(null);
 
     try {
       const response = await axios.post("http://localhost:8080/user/create", {
@@ -52,39 +56,57 @@ const Register = () => {
 
       if (response.status === 200) {
         alert("Registration successful!");
-        console.log("") // Điều hướng về trang đăng nhập
+        navigate("/login"); // Chuyển hướng đến trang đăng nhập
       }
     } catch (error: any) {
       setError(error.response?.data?.message || "Registration failed!");
     } finally {
-      setLoading(false); // Tắt trạng thái loading
+      setLoading(false);
     }
   };
 
+
   return (
-    <div className="flex justify-center items-center min-h-screen bg-[#F8F8EC]">
-      <div className="bg-white p-8 rounded-xl shadow-lg w-96">
-        <h2 className="text-2xl font-semibold text-center mb-6">Sign Up</h2>
+    <div className="min-h-screen flex items-center justify-center bg-[#F8F8EC] relative">
+      {/* Ảnh nền */}
+      <img
+        src={coverImage}
+        alt="Ecology Illustration"
+        className="absolute left-10 top-20 w-[100%] max-w-[700px] opacity-100"
+      />
 
-        {/* Hiển thị lỗi nếu có */}
-        {error && <p className="text-red-500 text-center">{error}</p>}
+      {/* Tiêu đề */}
+      <div className="absolute top-10 left-170 text-left">
+        <h1 className="text-6xl font-bold text-green-700 leading-[1.2]">Ecology &</h1>
+        <h1 className="text-6xl font-bold text-green-700 leading-[1.2]">Environment</h1>
+        <h1 className="text-6xl font-bold text-gray-900 leading-[1.2]">Illustrations</h1>
+      </div>
 
-        {/* Form */}
-        <form className="space-y-4" onSubmit={handleSubmit}>
+      {/* Form Sign Up dời xuống góc dưới bên phải */}
+      <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-md absolute top-70 right-10">
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">
+          Sign Up
+        </h2>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+          {/* Name */}
           <div>
-            <label className="block text-sm font-medium">Username</label>
+            <label className="block text-gray-700 font-medium">Name</label>
             <input
               type="text"
-              name="username"
-              placeholder="Enter your username"
-              className="w-full p-2 border border-gray-300 rounded-lg"
-              onChange={handleChange}
-              required
+              {...register("name")}
+              placeholder="Enter your name"
+              className="w-full px-4 py-1.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+
             />
+            {errors.name && (
+              <p className="text-red-500 text-sm">{errors.name.message}</p>
+            )}
           </div>
 
+          {/* Email */}
           <div>
-            <label className="block text-sm font-medium">Email</label>
+            <label className="block text-gray-700 font-medium">Email</label>
             <input
               type="email"
               name="email"
@@ -113,26 +135,36 @@ const Register = () => {
               type="text"
               name="lastname"
               placeholder="Enter your last name"
-              className="w-full p-2 border border-gray-300 rounded-lg"
+              className="w-full px-4 py-1.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400
               onChange={handleChange}
               required
-            />
+
+            {errors.email && (
+              <p className="text-red-500 text-sm">{errors.email.message}</p>
+            )}
           </div>
 
+          {/* Password */}
           <div>
-            <label className="block text-sm font-medium">Password</label>
+            <label className="block text-gray-700 font-medium">Password</label>
             <input
               type="password"
+
               name="password"
               placeholder="Enter your password"
-              className="w-full p-2 border border-gray-300 rounded-lg"
+              className="w-full px-4 py-1.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400
               onChange={handleChange}
               required
+
             />
+            {errors.password && (
+              <p className="text-red-500 text-sm">{errors.password.message}</p>
+            )}
           </div>
 
+          {/* Confirm Password */}
           <div>
-            <label className="block text-sm font-medium">Confirm Password</label>
+            <label className="block text-gray-700 font-medium">Confirm Password</label>
             <input
               type="password"
               name="confirmPassword"
@@ -162,8 +194,12 @@ const Register = () => {
               className="w-full p-2 border border-gray-300 rounded-lg"
               onChange={handleChange}
             />
+            {errors.confirmPassword && (
+              <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>
+            )}
           </div>
 
+          {/* Sign Up Button */}
           <button
             type="submit"
             className={`w-full text-white py-2 rounded-lg transition ${
@@ -175,12 +211,13 @@ const Register = () => {
           </button>
         </form>
 
-        {/* Điều hướng sang Login */}
-        <p className="text-sm text-center mt-4">
+
+        <p className="mt-4 text-center text-gray-600">
+
           Already have an account?{" "}
-          <Link to="/login" className="text-blue-500 hover:underline">
+          <a href="/login" className="text-blue-500 hover:underline">
             Login
-          </Link>
+          </a>
         </p>
       </div>
     </div>
