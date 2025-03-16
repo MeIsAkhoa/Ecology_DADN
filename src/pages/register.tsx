@@ -1,73 +1,6 @@
-// import { Link } from "react-router-dom";
-// import { FcGoogle } from "react-icons/fc";
-
-// const Register = () => {
-//   return (
-//     <div className="flex justify-center items-center min-h-screen bg-[#F8F8EC]">
-//       <div className="bg-white p-8 rounded-xl shadow-lg w-96">
-//         <h2 className="text-2xl font-semibold text-center mb-6">Sign Up</h2>
-
-//         {/* Form */}
-//         <form className="space-y-4">
-//           <div>
-//             <label className="block text-sm font-medium">Name</label>
-//             <input
-//               type="text"
-//               placeholder="Enter your name"
-//               className="w-full p-2 border border-gray-300 rounded-lg"
-//             />
-//           </div>
-
-//           <div>
-//             <label className="block text-sm font-medium">Email</label>
-//             <input
-//               type="email"
-//               placeholder="Enter your email"
-//               className="w-full p-2 border border-gray-300 rounded-lg"
-//             />
-//           </div>
-
-//           <div>
-//             <label className="block text-sm font-medium">Password</label>
-//             <input
-//               type="password"
-//               placeholder="Enter your password"
-//               className="w-full p-2 border border-gray-300 rounded-lg"
-//             />
-//           </div>
-
-//           <div>
-//             <label className="block text-sm font-medium">Confirm Password</label>
-//             <input
-//               type="password"
-//               placeholder="Confirm your password"
-//               className="w-full p-2 border border-gray-300 rounded-lg"
-//             />
-//           </div>
-
-//           <button
-//             type="submit"
-//             className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
-//           >
-//             Sign Up
-//           </button>
-//         </form>
-
-
-//         {/* Điều hướng sang Login */}
-//         <p className="text-sm text-center mt-4">
-//           Already have an account?{" "}
-//           <Link to="/login" className="text-blue-500 hover:underline">
-//             Login
-//           </Link>
-//         </p>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Register;
-
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -75,10 +8,15 @@ import coverImage from "../assets/cover.png";
 
 // Schema validation với Zod
 const registerSchema = z.object({
-  name: z.string().min(1, "Name is required"),
+  username: z.string().min(1, "Username is required"),
   email: z.string().email("Invalid email format"),
   password: z.string().min(6, "Password must be at least 6 characters"),
   confirmPassword: z.string().min(6, "Confirm password must be at least 6 characters"),
+  firstname: z.string().min(1, "First name is required"),
+  lastname: z.string().min(1, "Last name is required"),
+  gender: z.enum(["nam", "nu", "khac"]),
+  phonenum: z.string().min(10, "Phone number must be at least 10 digits"),
+  dob: z.string().min(1, "Date of birth is required"),
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords do not match",
   path: ["confirmPassword"],
@@ -87,6 +25,10 @@ const registerSchema = z.object({
 type RegisterFormInputs = z.infer<typeof registerSchema>;
 
 const Register = () => {
+  const navigate = useNavigate();
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -95,9 +37,34 @@ const Register = () => {
     resolver: zodResolver(registerSchema),
   });
 
-  const onSubmit = (data: RegisterFormInputs) => {
-    console.log("Register Data:", data);
+  // Xử lý khi nhấn "Sign Up"
+  const onSubmit = async (formData: RegisterFormInputs) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await axios.post("http://localhost:8080/user/create", {
+        username: formData.username,
+        password: formData.password,
+        email: formData.email,
+        firstname: formData.firstname,
+        lastname: formData.lastname,
+        gender: formData.gender,
+        phonenum: formData.phonenum,
+        dob: formData.dob,
+      });
+
+      if (response.status === 200) {
+        alert("Registration successful!");
+        navigate("/login"); // Chuyển hướng đến trang đăng nhập
+      }
+    } catch (error: any) {
+      setError(error.response?.data?.message || "Registration failed!");
+    } finally {
+      setLoading(false);
+    }
   };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#F8F8EC] relative">
@@ -130,6 +97,7 @@ const Register = () => {
               {...register("name")}
               placeholder="Enter your name"
               className="w-full px-4 py-1.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+
             />
             {errors.name && (
               <p className="text-red-500 text-sm">{errors.name.message}</p>
@@ -141,10 +109,36 @@ const Register = () => {
             <label className="block text-gray-700 font-medium">Email</label>
             <input
               type="email"
-              {...register("email")}
+              name="email"
               placeholder="Enter your email"
-              className="w-full px-4 py-1.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full p-2 border border-gray-300 rounded-lg"
+              onChange={handleChange}
+              required
             />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium">First Name</label>
+            <input
+              type="text"
+              name="firstname"
+              placeholder="Enter your first name"
+              className="w-full p-2 border border-gray-300 rounded-lg"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium">Last Name</label>
+            <input
+              type="text"
+              name="lastname"
+              placeholder="Enter your last name"
+              className="w-full px-4 py-1.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400
+              onChange={handleChange}
+              required
+
             {errors.email && (
               <p className="text-red-500 text-sm">{errors.email.message}</p>
             )}
@@ -155,9 +149,13 @@ const Register = () => {
             <label className="block text-gray-700 font-medium">Password</label>
             <input
               type="password"
-              {...register("password")}
+
+              name="password"
               placeholder="Enter your password"
-              className="w-full px-4 py-1.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full px-4 py-1.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400
+              onChange={handleChange}
+              required
+
             />
             {errors.password && (
               <p className="text-red-500 text-sm">{errors.password.message}</p>
@@ -169,9 +167,32 @@ const Register = () => {
             <label className="block text-gray-700 font-medium">Confirm Password</label>
             <input
               type="password"
-              {...register("confirmPassword")}
+              name="confirmPassword"
               placeholder="Confirm your password"
-              className="w-full px-4 py-1.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full p-2 border border-gray-300 rounded-lg"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium">Phone Number</label>
+            <input
+              type="text"
+              name="phonenum"
+              placeholder="Enter your phone number"
+              className="w-full p-2 border border-gray-300 rounded-lg"
+              onChange={handleChange}
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium">Date of Birth</label>
+            <input
+              type="date"
+              name="dob"
+              className="w-full p-2 border border-gray-300 rounded-lg"
+              onChange={handleChange}
             />
             {errors.confirmPassword && (
               <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>
@@ -181,14 +202,18 @@ const Register = () => {
           {/* Sign Up Button */}
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
+            className={`w-full text-white py-2 rounded-lg transition ${
+              loading ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"
+            }`}
+            disabled={loading}
           >
-            Sign Up
+            {loading ? "Registering..." : "Sign Up"}
           </button>
         </form>
 
-        {/* Already have an account? Login */}
+
         <p className="mt-4 text-center text-gray-600">
+
           Already have an account?{" "}
           <a href="/login" className="text-blue-500 hover:underline">
             Login

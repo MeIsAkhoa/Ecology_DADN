@@ -84,11 +84,14 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+
+import { useState } from "react";
+import axios from "axios";
 import LoginWithGoogle from "../components/google-login-button";
 import coverImage from "../assets/cover.png";
 
 const loginSchema = z.object({
-  email: z.string().email("Invalid email format"),
+  username: z.string().min(6, "Username must be at least 6 characters"),
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
@@ -103,12 +106,23 @@ const Login = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = (data: LoginFormInputs) => {
-    console.log("Login Data:", data);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const onSubmit = async (data: LoginFormInputs) => {
+    try {
+      const response = await axios.post("http://localhost:8080/login/token", data);
+
+      if (response.data.code === 200) {
+        localStorage.setItem("token", response.data.result.token);
+        window.location.href = "/";
+      }
+    } catch (error: any) {
+      setErrorMessage(error.response?.data?.message || "Đăng nhập thất bại!");
+    }
   };
 
   return (
-    
+   
     <div className="min-h-screen flex items-center justify-center bg-[#F8F8EC] relative">
       {/* Ảnh nền */}
       <img
@@ -130,17 +144,18 @@ const Login = () => {
           Login
         </h2>
 
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
           <div>
-            <label className="block text-gray-700 font-medium">Email</label>
+            <label className="block text-gray-700 font-medium">Username</label>
             <input
-              type="email"
-              {...register("email")}
-              placeholder="Enter your email"
+              type="text"
+              {...register("username")}
+              placeholder="Enter your username"
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
-            {errors.email && (
-              <p className="text-red-500 text-sm">{errors.email.message}</p>
+            {errors.username && (
+              <p className="text-red-500 text-sm">{errors.username.message}</p>
             )}
           </div>
 
@@ -163,6 +178,7 @@ const Login = () => {
           >
             Login
           </button>
+
 
           <LoginWithGoogle />
         </form>
