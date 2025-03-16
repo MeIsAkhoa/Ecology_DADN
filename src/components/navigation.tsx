@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, User, Settings } from "lucide-react";
+import { Home, User, Settings, Hourglass, MonitorCog } from "lucide-react";
 import { nav_Button } from "./nav-button";
+import LogoutButton from "./logout-button";
 
 const Sidebar = () => {
   const location = useLocation(); // Lấy đường dẫn hiện tại
@@ -16,7 +17,7 @@ const Sidebar = () => {
           })}
         >
           <Home className="w-5 h-5" />
-          <span>Home</span>
+          <span>Trang chủ</span>
         </Link>
 
         <Link
@@ -25,7 +26,7 @@ const Sidebar = () => {
             variant: location.pathname === "/currentData" ? "chosen" : "unchosen",
           })}
         >
-          <Settings className="w-5 h-5" />
+          <Hourglass className="w-5 h-5" />
           <span>Điều kiện hiện tại</span>
         </Link>
 
@@ -35,18 +36,8 @@ const Sidebar = () => {
             variant: location.pathname === "/config" ? "chosen" : "unchosen",
           })}
         >
-          <Settings className="w-5 h-5" />
+          <MonitorCog className="w-5 h-5" />
           <span>Điều chỉnh</span>
-        </Link>
-
-        <Link
-          to="/profile"
-          className={nav_Button({
-            variant: location.pathname === "/profile" ? "chosen" : "unchosen",
-          })}
-        >
-          <User className="w-5 h-5" />
-          <span>Profile</span>
         </Link>
 
         <Link
@@ -56,8 +47,20 @@ const Sidebar = () => {
           })}
         >
           <Settings className="w-5 h-5" />
-          <span>Settings</span>
+          <span>Cài đặt</span>
         </Link>
+
+        <Link
+          to="/profile"
+          className={nav_Button({
+            variant: location.pathname === "/profile" ? "chosen" : "unchosen",
+          })}
+        >
+          <User className="w-5 h-5" />
+          <span>Thông tin</span>
+        </Link>
+
+        <LogoutButton />
       </nav>
     </div>
   );

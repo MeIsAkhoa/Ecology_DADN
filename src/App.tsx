@@ -1,33 +1,36 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Sidebar from "./components/navigation";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import MainLayout from "./layouts/MainLayout";
+import AuthLayout from "./layouts/AuthLayout";
 import Home from "./pages/home";
 import Profile from "./pages/profile";
 import Settings from "./pages/setting";
-import Login from "./pages/login";
-import "./App.css";
 import Config from "./pages/config";
 import CurrentData from "./pages/data_page";
-import { GoogleOAuthProvider } from "@react-oauth/google";
+import Login from "./pages/login";
 import Register from "./pages/register";
+import "./App.css";
 
 const App = () => {
   return (
-    <GoogleOAuthProvider  clientId="918105208926-vc3sjjcr244asgnu6fvfbqirmjk2fum1.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId="918105208926-vc3sjjcr244asgnu6fvfbqirmjk2fum1.apps.googleusercontent.com">
       <Router>
-        <div className="flex">
-          <Sidebar />
-          <div className="flex-1 p-6">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/config" element={<Config />} />
-              <Route path="/currentData" element={<CurrentData />} />
-              <Route path="/register" element={<Register />} />
-            </Routes>
-          </div>
-        </div>
+        <Routes>
+          {/* Routes dùng layout chính */}
+          <Route element={<MainLayout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/config" element={<Config />} />
+            <Route path="/currentData" element={<CurrentData />} />
+          </Route>
+
+          {/* Routes dùng layout cho Auth */}
+          <Route element={<AuthLayout />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Route>
+        </Routes>
       </Router>
     </GoogleOAuthProvider>
   );
