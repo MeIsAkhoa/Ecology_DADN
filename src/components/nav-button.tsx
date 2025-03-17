@@ -21,5 +21,25 @@ export const nav_Button = cva(
   }
 );
 
-// ✅ Định nghĩa type cho variants để tránh lỗi TypeScript
-export type NavButtonProps = VariantProps<typeof nav_Button>;
+// ✅ Định nghĩa type props
+export type NavButtonProps = {
+  to: string;
+  icon: React.ReactNode;
+  label: string;
+};
+
+// ✅ Component cho button "chosen"
+export const NavButtonChosen = ({ to, icon, label }: NavButtonProps) => (
+  <a href={to} className={nav_Button({ variant: "chosen" })}>
+    {icon}
+    <span className="hidden lg:inline">{label}</span>
+  </a>
+);
+
+// ✅ Component cho button "unchosen"
+export const NavButtonUnchosen = ({ to, icon, label }: NavButtonProps) => (
+  <a href={to} className={nav_Button({ variant: "unchosen" })}>
+    {icon}
+    <span className="hidden lg:inline">{label}</span>
+  </a>
+);

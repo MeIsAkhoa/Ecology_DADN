@@ -1,6 +1,6 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { nav_Button } from "./nav-button";
-import { Home, User, Settings, Hourglass, MonitorCog } from "lucide-react";
+import { LogOut } from "lucide-react";
 
 const LogoutButton = () => {
     const navigate = useNavigate();
@@ -17,10 +17,11 @@ const LogoutButton = () => {
           variant: location.pathname === "/logout" ? "chosen" : "unchosen",
         })}
       >
-        <User className="w-5 h-5" />
+        <LogOut className="w-6 h-6 mr-1.5 text-red-500" />
         <span>Đăng xuất</span>
       </button>
     );
   };
   
   export default LogoutButton;
+  

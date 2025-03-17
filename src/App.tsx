@@ -10,6 +10,7 @@ import CurrentData from "./pages/data_page";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import "./App.css";
+import ROUTES from "./constants/routes";
 
 const App = () => {
   return (
@@ -18,17 +19,17 @@ const App = () => {
         <Routes>
           {/* Routes dùng layout chính */}
           <Route element={<MainLayout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/config" element={<Config />} />
-            <Route path="/currentData" element={<CurrentData />} />
+            <Route path={ROUTES.HOME} element={<Home />} />
+            <Route path={ROUTES.PROFILE} element={<Profile />} />
+            <Route path={ROUTES.SETTINGS} element={<Settings />} />
+            <Route path={ROUTES.CONFIG} element={<Config />} />
+            <Route path={ROUTES.CURRENT_DATA} element={<CurrentData />} />
           </Route>
 
           {/* Routes dùng layout cho Auth */}
           <Route element={<AuthLayout />}>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route path={ROUTES.LOGIN} element={<Login />} />
+            <Route path={ROUTES.REGISTER} element={<Register />} />
           </Route>
         </Routes>
       </Router>
