@@ -42,10 +42,11 @@ const LightingControl: React.FC = () => {
     } finally {
       setLoading(false);
     }
+
   };
 
   return (
-    <div className="p-4 bg-green-100 rounded-lg">
+    <div className="p-4 bg-gradient-to-l from-green-100 to-green-250 rounded-lg">
       <div className="flex items-center justify-between bg-white p-4 rounded-lg shadow-md">
         <div className="flex items-center">
           <img src={Light} alt="Light" className="w-10 h-10 mr-3" />
@@ -73,6 +74,7 @@ const LightingControl: React.FC = () => {
         </div>
       </div>
       {message && <p className="mt-2 text-sm text-center">{message}</p>}
+
     </div>
   );
 };
