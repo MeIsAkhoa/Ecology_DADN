@@ -23,7 +23,7 @@ const DataRecord: React.FC = () => {
   };
 
   return (
-    <div className="p-4 bg-green-100 rounded-lg">
+    <div className="p-4 bg-gradient-to-r from-green-100 to-green-250 rounded-lg">
       {/* ĐẶT NGAY */}
       <div className="flex items-center justify-between bg-white p-4 rounded-lg shadow-md">
         <div className="flex items-center">

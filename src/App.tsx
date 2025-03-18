@@ -14,9 +14,9 @@ const App = () => {
   return (
     <GoogleOAuthProvider  clientId="918105208926-vc3sjjcr244asgnu6fvfbqirmjk2fum1.apps.googleusercontent.com">
       <Router>
-        <div className="flex">
+        <div className="flex h-screen">
           <Sidebar />
-          <div className="flex-1 p-6">
+          <div className="flex-1 p-6 overflow-auto">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/profile" element={<Profile />} />
