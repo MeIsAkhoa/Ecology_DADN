@@ -11,6 +11,7 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import "./App.css";
 import ROUTES from "./constants/routes";
+import Sidebar from "./components/navigation";
 
 const App = () => {
   return (
