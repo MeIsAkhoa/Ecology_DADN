@@ -1,67 +1,24 @@
-import { Link, useLocation } from "react-router-dom";
 import { Home, User, Settings, Hourglass, MonitorCog } from "lucide-react";
-import { nav_Button } from "./nav-button";
+import { NavButtonUnchosen } from "./nav-button";
 import LogoutButton from "./logout-button";
+import ROUTES from "../constants/routes";
 
 const Sidebar = () => {
-  const location = useLocation(); // Lấy đường dẫn hiện tại
-
   return (
-    <div className="h-screen w-64 bg-gray-900 text-black flex flex-col p-5 bg-white">
-
-      <nav className="flex flex-col space-y-4">
-        <Link
-          to="/"
-          className={nav_Button({
-            variant: location.pathname === "/" ? "chosen" : "unchosen",
-          })}
-        >
-          <Home className="w-5 h-5" />
-          <span>Trang chủ</span>
-        </Link>
-
-        <Link
-          to="/currentData"
-          className={nav_Button({
-            variant: location.pathname === "/currentData" ? "chosen" : "unchosen",
-          })}
-        >
-          <Hourglass className="w-5 h-5" />
-          <span>Điều kiện hiện tại</span>
-        </Link>
-
-        <Link
-          to="/config"
-          className={nav_Button({
-            variant: location.pathname === "/config" ? "chosen" : "unchosen",
-          })}
-        >
-          <MonitorCog className="w-5 h-5" />
-          <span>Điều chỉnh</span>
-        </Link>
-
-        <Link
-          to="/settings"
-          className={nav_Button({
-            variant: location.pathname === "/settings" ? "chosen" : "unchosen",
-          })}
-        >
-          <Settings className="w-5 h-5" />
-          <span>Cài đặt</span>
-        </Link>
-
-        <Link
-          to="/profile"
-          className={nav_Button({
-            variant: location.pathname === "/profile" ? "chosen" : "unchosen",
-          })}
-        >
-          <User className="w-5 h-5" />
-          <span>Thông tin</span>
-        </Link>
-
-        <LogoutButton />
+    <div className="h-screen w-64 bg-white text-black flex flex-col justify-between p-5 shadow-lg md:w-20 lg:w-64 transition-all duration-300">
+      {/* --- Mục điều hướng chính --- */}
+      <nav className="mt-6 flex flex-col space-y-4">
+        <NavButtonUnchosen to={ROUTES.HOME} icon={<Home className="w-6 h-6 mr-1.5" />} label="Trang chủ" />
+        <NavButtonUnchosen to={ROUTES.CURRENT_DATA} icon={<Hourglass className="w-6 h-6 mr-1.5" />} label="Điều kiện hiện tại" />
+        <NavButtonUnchosen to={ROUTES.CONFIG} icon={<MonitorCog className="w-6 h-6 mr-1.5" />} label="Điều chỉnh" />
       </nav>
+      {/* --- Mục thông tin & cài đặt --- */}
+      <div className="flex flex-col space-y-4">
+        <NavButtonUnchosen to={ROUTES.PROFILE} icon={<User className="w-6 h-6 mr-1.5" />} label="Thông tin" />
+        <NavButtonUnchosen to={ROUTES.SETTINGS} icon={<Settings className="w-6 h-6 mr-1.5" />} label="Cài đặt" />
+        {/* --- Đăng xuất --- */}
+        <LogoutButton />
+      </div>
     </div>
   );
 };
