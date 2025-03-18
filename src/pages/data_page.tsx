@@ -1,13 +1,12 @@
-import TemperatureChartWithInfo from "../components/DP1_Temperature"
+import { HumidityCard, LightCard, TemperatureCard } from "../components/real_data_chart";
 
 export default function CurrentData() {
-  return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Điều kiện hiện tại</h1>
-
-      <div className="mb-6">
-        <TemperatureChartWithInfo />
-      </div>
+    return (
+      <div className="grid grid-cols-3 gap-4 p-6">
+      <TemperatureCard value={28} />
+      <HumidityCard value={65} />
+      <LightCard value={1200} />
     </div>
-  )
-}
+    )
+  }
+
