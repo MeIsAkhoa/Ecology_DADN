@@ -21,6 +21,7 @@ const Login = () => {
     resolver: zodResolver(loginSchema),
   });
 
+
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const onSubmit = async (data: LoginFormInputs) => {
@@ -35,23 +36,22 @@ const Login = () => {
       setErrorMessage(error.response?.data?.message || "Đăng nhập thất bại!");
     }
   };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#F8F8EC] relative">
       {/* Ảnh nền */}
       <img
         src={coverImage}
         alt="Ecology Illustration"
-        className="absolute left-10 top-20 w-[100%] max-w-[700px] opacity-100"
+        className="hidden md:block absolute left-10 top-20 w-[100%] max-w-[700px] opacity-100"
       />
       {/* Tiêu đề */}
-      <div className="absolute top-10 left-170 text-left">
+      <div className="text-left fixed right-[5%] top-[10%] w-full max-w-md">
         <h1 className="text-6xl font-bold text-green-700 leading-[1.2]">Ecology &</h1>
         <h1 className="text-6xl font-bold text-green-700 leading-[1.2]">Environment</h1>
         <h1 className="text-6xl font-bold text-gray-900 leading-[1.2]">Illustrations</h1>
       </div>
       {/* Form login dời xuống góc dưới bên phải */}
-      <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md absolute bottom-25 right-10">
+      <div className="fixed right-[5%] bottom-25 bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">
           Login
         </h2>
@@ -100,3 +100,4 @@ const Login = () => {
 };
 
 export default Login;
+  

@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -63,9 +61,8 @@ const Register = () => {
       <img
         src={coverImage}
         alt="Ecology Illustration"
-        className="absolute left-10 top-20 w-[100%] max-w-[700px] opacity-100"
+        className="hidden md:block absolute left-10 top-20 w-[100%] max-w-[700px] opacity-100"
       />
-
       {/* Tiêu đề */}
       <div className="absolute top-10 left-170 text-left">
         <h1 className="text-6xl font-bold text-green-700 leading-[1.2]">Ecology &</h1>
@@ -86,6 +83,47 @@ const Register = () => {
           <InputField label="Confirm Password" name="confirmPassword" type="password" placeholder="Confirm your password" register={register} error={errors.confirmPassword?.message} />
           <InputField label="Phone Number" name="phonenum" placeholder="Enter your phone number" register={register} error={errors.phonenum?.message} />
           <InputField label="Date of Birth" name="dob" type="date" register={register} error={errors.dob?.message} />
+          {/* Gender */}
+          <div>
+            <label className="block text-gray-700 font-medium">Gender</label>
+            <select
+              {...register("gender")}
+              className="w-full px-4 py-1.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            >
+              <option value="nam">Male</option>
+              <option value="nu">Female</option>
+            </select>
+            {errors.gender && (
+              <p className="text-red-500 text-sm">{errors.gender.message}</p>
+            )}
+          </div>
+
+          {/* Phone Number */}
+          <div>
+            <label className="block text-gray-700 font-medium">Phone Number</label>
+            <input
+              type="text"
+              {...register("phonenum")}
+              placeholder="Enter your phone number"
+              className="w-full px-4 py-1.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+            {errors.phonenum && (
+              <p className="text-red-500 text-sm">{errors.phonenum.message}</p>
+            )}
+          </div>
+
+          {/* Date of Birth */}
+          <div>
+            <label className="block text-gray-700 font-medium">Date of Birth</label>
+            <input
+              type="date"
+              {...register("dob")}
+              className="w-full px-4 py-1.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+            {errors.dob && (
+              <p className="text-red-500 text-sm">{errors.dob.message}</p>
+            )}
+          </div>
 
           {/* Sign Up Button */}
           <button
