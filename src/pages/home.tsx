@@ -1,6 +1,3 @@
-import TemperatureChart from "../components/H1_Temperature";
-import HumidityChart from "../components/H2_Humidity";
-
 export default function Home() {
   return (
 
