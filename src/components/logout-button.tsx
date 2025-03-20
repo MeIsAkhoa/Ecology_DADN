@@ -18,7 +18,7 @@ const LogoutButton = () => {
         })}
       >
         <LogOut className="w-6 h-6 mr-1.5 text-red-500" />
-        <span>Đăng xuất</span>
+        <span className="sm:inline ">Đăng xuất</span>
       </button>
     );
   };

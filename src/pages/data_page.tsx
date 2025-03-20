@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Humidity from "../components/chart_humid";
-import Light from "../components/chart_light";
+import Humidity from "../components/chart_Humid";
+import Light from "../components/chart_Light";
 import SolidMoisture from "../components/chart_SoildMoisture";
 import Temperature from "../components/chart_Temperature";
 import SensorDashboard from "../components/real_data_chart";
@@ -8,8 +8,8 @@ import SensorDashboard from "../components/real_data_chart";
 export default function CurrentData() {
   const [selectedData, setSelectedData] = useState("temperature");
   return (
-    <div className=" items-center justify-center h-screen bg-gray-100">
-      <div className="bg-white rounded-xl shadow-md">
+    <div className="lg:ml-70 items-center justify-center h-screen bg-gray-100 ">
+      <div className="bg-white rounded-xl shadow-md z-0">
         <SensorDashboard />
       </div>
       <div>

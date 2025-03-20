@@ -37,7 +37,7 @@ export const NavButtonUnchosen = ({ to, icon, label }: NavButtonProps) => {
   return (
     <Link to={to} className={nav_Button({ variant: isActive ? "chosen" : "unchosen" })}>
       {icon}
-      <span className="hidden lg:inline">{label}</span>
+      <span className="sm:inline">{label}</span>
     </Link>
   );
 };
