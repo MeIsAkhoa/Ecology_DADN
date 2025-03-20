@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import api from "../utils/baseURL";
-import { Thermometer, Droplets, Sun, CloudRain } from "lucide-react"; // Import icon từ Lucide React
+import { Thermometer, Droplets, Sun, CloudRain } from "lucide-react";
 
 type SensorCardProps = {
   title: string;
@@ -23,78 +23,93 @@ const SensorDashboard = () => {
     lastSoilMoistureUpdate: null,
   });
 
-  // useEffect(() => {
-  //   let isMounted = true; // Biến kiểm tra component có bị unmount không
-  
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await api.get("/adafruit/latest");
-  
-  //       if (response.status === 200 && response.data.code === 200) {
-  //         if (isMounted) {
-  //           setSensorData(response.data.result);
-  //           console.log("✅ Dữ liệu cảm biến:", response.data.result);
-  //         }
-  //       } else {
-  //         console.warn("⚠ API trả về mã không hợp lệ:", response.data);
-  //       }
-  //     } catch (error: any) {
-  //       if (error.response) {
-  //         console.error("❌ Lỗi API:", error.response.status, error.response.data);
-  //       } else if (error.request) {
-  //         console.error("❌ Không nhận được phản hồi từ API:", error.request);
-  //       } else {
-  //         console.error("❌ Lỗi không xác định:", error.message);
-  //       }
-  //     }
-  //   };
-  
-  //   fetchData();
-  //   const interval = setInterval(fetchData, 2000); // Gọi API mỗi 2 giây
-  
-  //   return () => {
-  //     isMounted = false; // Ngăn cập nhật state sau khi unmount
-  //     clearInterval(interval);
-  //   };
-  // }, []);
+  const lastDataRef = useRef(sensorData); // Lưu trữ dữ liệu trước đó
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchData = async () => {
+      try {
+        const response = await api.get("/adafruit/latest");
+
+        if (response.status === 200 && response.data.code === 200) {
+          const result = response.data.result;
+
+          // Kiểm tra nếu dữ liệu mới giống với dữ liệu trước đó => Không update state
+          if (JSON.stringify(lastDataRef.current) === JSON.stringify(result)) {
+            console.log("🔄 Dữ liệu không thay đổi, không update state.");
+            return;
+          }
+
+          if (isMounted) {
+            setSensorData({
+              temperature: result.temperature || 0.0,
+              lastTemperatureUpdate: result.lastTemperatureUpdate || null,
+              humidity: result.humidity || 0.0,
+              lastHumidityUpdate: result.lastHumidityUpdate || null,
+              lightIntensity: result.lightIntensity || 0.0,
+              lastLightIntensityUpdate: result.lastLightIntensityUpdate || null,
+              soilMoisture: result.soilMoisture || 0.0,
+              lastSoilMoistureUpdate: result.lastSoilMoistureUpdate || null,
+            });
+
+            lastDataRef.current = result; // Cập nhật dữ liệu mới nhất
+            console.log("✅ Cập nhật dữ liệu mới:", result);
+          }
+        } else {
+          console.warn("⚠ API trả về mã không hợp lệ:", response.data);
+        }
+      } catch (error: any) {
+        console.error("❌ Lỗi khi gọi API:", error.response?.status, error.response?.data || error.message);
+      }
+    };
+
+    fetchData();
+    const interval = setInterval(fetchData, 10000);
+
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
+  }, []);
 
   const sensorCards = [
     {
       title: "Nhiệt độ",
       value: sensorData.temperature,
       timestamp: sensorData.lastTemperatureUpdate,
-      standard: "Tiêu chuẩn: 20°C - 35°C",
-      bgColor: "bg-red-200",
+      standard: "20°C - 35°C",
+      bgColor: "bg-red-100 text-red-700",
       Icon: Thermometer,
     },
     {
       title: "Độ ẩm không khí",
       value: sensorData.humidity,
       timestamp: sensorData.lastHumidityUpdate,
-      standard: "Tiêu chuẩn: 40% - 70%",
-      bgColor: "bg-blue-200",
+      standard: "40% - 70%",
+      bgColor: "bg-blue-100 text-blue-700",
       Icon: Droplets,
     },
     {
       title: "Cường độ ánh sáng",
       value: sensorData.lightIntensity,
       timestamp: sensorData.lastLightIntensityUpdate,
-      standard: "Tiêu chuẩn: 1000 - 5000 lux",
-      bgColor: "bg-yellow-200",
+      standard: "1000 - 5000 lux",
+      bgColor: "bg-yellow-100 text-yellow-700",
       Icon: Sun,
     },
     {
       title: "Độ ẩm đất",
       value: sensorData.soilMoisture,
       timestamp: sensorData.lastSoilMoistureUpdate,
-      standard: "Tiêu chuẩn: 30% - 60%",
-      bgColor: "bg-green-200",
+      standard: "30% - 60%",
+      bgColor: "bg-green-100 text-green-700",
       Icon: CloudRain,
     },
   ];
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-16 px-10 py-5 justify-center">  
       {sensorCards.map((sensor, index) => (
         <SensorCard
           key={index}
@@ -110,17 +125,44 @@ const SensorDashboard = () => {
   );
 };
 
-// Component hiển thị từng cảm biến
-const SensorCard: React.FC<SensorCardProps> = ({ title, value, timestamp, standard, bgColor, Icon }) => {
+interface SensorCardPr {
+  title: string;
+  value: number | string;
+  timestamp: string | null;
+  standard: string;
+  bgColor: string;
+  Icon: React.ElementType;
+}
+
+const SensorCard: React.FC<SensorCardPr> = ({ title, value, timestamp, standard, bgColor, Icon }) => {
+  const formatTimestamp = (timestamp: string | null) => {
+    if (!timestamp) return "Chưa cập nhật";
+    return new Date(timestamp).toLocaleString("vi-VN", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    });
+  };
+
   return (
-    <div className={`p-4 rounded-lg shadow-md flex flex-col items-center ${bgColor}`}>
-      <Icon className="w-10 h-10 text-gray-700 mb-2" /> {/* Icon */}
-      <h3 className="text-lg font-bold text-gray-800">{title}</h3>
-      <p className="text-xl font-semibold text-gray-900">{value}</p>
-      <p className="text-sm text-gray-700">
-        Cập nhật: {timestamp ? new Date(timestamp).toLocaleString() : "Chưa có dữ liệu"}
-      </p>
-      <p className="text-xs text-gray-600">{standard}</p>
+    <div
+      className={`w-52 h-52 flex flex-col items-center justify-center rounded-full border-4 border-black shadow-xl ${bgColor} 
+                transform transition-all hover:scale-110 hover:shadow-2xl p-5 text-center relative`}
+    >
+      {/* Icon */}
+      <Icon className="w-14 h-14 mb-2 text-black drop-shadow-lg filter brightness-110" />
+
+      {/* Giá trị chính */}
+      <p className="text-3xl font-extrabold text-black tracking-wide drop-shadow">{value}</p>
+
+      {/* Tiêu đề */}
+      <p className="text-sm text-black opacity-90">{title}</p>
+
+      {/* Hiển thị thời gian */}
+      <div className="absolute bottom-3 text-xs text-black opacity-80 flex items-center gap-1">
+        <span className="text-lg">⏰</span>
+        {formatTimestamp(timestamp)}
+      </div>
     </div>
   );
 };
