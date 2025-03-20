@@ -1,13 +1,14 @@
 import { Link, useLocation } from "react-router-dom";
 import { cva } from "class-variance-authority";
 
+// ✅ Định nghĩa class bằng class-variance-authority
 export const nav_Button = cva(
   "flex items-center rounded-md px-4 py-2 transition duration-300 gap-2",
   {
     variants: {
-      variant: {
-        chosen: "bg-blue-500 text-white font-bold",
-        unchosen: "bg-white text-black hover:bg-gray-200",
+      isActive: {
+        true: "bg-blue-500 text-white font-bold",
+        false: "bg-white text-black hover:bg-gray-200",
       },
       size: {
         large: "text-lg py-3 px-6",
@@ -16,7 +17,7 @@ export const nav_Button = cva(
       },
     },
     defaultVariants: {
-      variant: "unchosen",
+      isActive: false,
       size: "medium",
     },
   }
@@ -27,17 +28,18 @@ export type NavButtonProps = {
   to: string;
   icon: React.ReactNode;
   label: string;
+  onClick?: () => void;
 };
 
-// ✅ Component button tự động nhận trạng thái "chosen"
-export const NavButtonUnchosen = ({ to, icon, label }: NavButtonProps) => {
+// ✅ Component dùng chung (không tách thành "chosen" & "unchosen" nữa)
+export const NavButton = ({ to, icon, label }: NavButtonProps) => {
   const location = useLocation(); // Lấy URL hiện tại
-  const isActive = location.pathname === to; // Kiểm tra nút nào đang active
+  const isActive = location.pathname === to; // Kiểm tra trạng thái active
 
   return (
-    <Link to={to} className={nav_Button({ variant: isActive ? "chosen" : "unchosen" })}>
+    <Link to={to} className={nav_Button({ isActive })}>
       {icon}
-      <span className="sm:inline">{label}</span>
+      <span className="hidden lg:inline">{label}</span>
     </Link>
   );
 };

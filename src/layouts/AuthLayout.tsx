@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
+import ROUTES from "../constants/routes";
 
 const AuthLayout = () => {
   const navigate = useNavigate();
@@ -8,7 +9,7 @@ const AuthLayout = () => {
     // Kiểm tra nếu đã có token
     const token = localStorage.getItem("token");
     if (token) {
-      navigate("/"); // Chuyển hướng về trang chủ hoặc dashboard
+      navigate(ROUTES.HOME); // Chuyển hướng về trang chủ hoặc dashboard
     }
   }, [navigate]);
 

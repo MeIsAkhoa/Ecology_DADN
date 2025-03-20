@@ -8,7 +8,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
-import { NavButtonUnchosen } from "./nav-button";
+import { NavButton } from "./nav-button";
 import LogoutButton from "./logout-button";
 import ROUTES from "../constants/routes";
 
@@ -47,17 +47,17 @@ const Sidebar = () => {
           className=" flex flex-col space-y-4 h-3/4"
           onClick={() => setIsOpen(false)}
         >
-          <NavButtonUnchosen
+          <NavButton
             to={ROUTES.HOME}
             icon={<Home className="w-6 h-6 mr-1.5" />}
             label="Trang chủ"
           />
-          <NavButtonUnchosen
+          <NavButton
             to={ROUTES.CURRENT_DATA}
             icon={<Hourglass className="w-6 h-6 mr-1.5" />}
             label="Điều kiện hiện tại"
           />
-          <NavButtonUnchosen
+          <NavButton
             to={ROUTES.CONFIG}
             icon={<MonitorCog className="w-6 h-6 mr-1.5" />}
             label="Điều chỉnh"
@@ -66,12 +66,12 @@ const Sidebar = () => {
 
         {/* --- Mục thông tin & cài đặt --- */}
         <nav className="flex flex-col space-y-4">
-          <NavButtonUnchosen
+          <NavButton
             to={ROUTES.PROFILE}
             icon={<User className="w-6 h-6 mr-1.5" />}
             label="Thông tin"
           />
-          <NavButtonUnchosen
+          <NavButton
             to={ROUTES.SETTINGS}
             icon={<Settings className="w-6 h-6 mr-1.5" />}
             label="Cài đặt"
