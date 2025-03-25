@@ -36,7 +36,7 @@ const Sidebar = () => {
       >
         {/* Nút Đóng Sidebar */}
         <button
-          className="absolute top-0 right-0 text-gray p-2 rounded lg:hidden"
+          className="absolute top-0 right-0 text-gray rounded lg:hidden"
           onClick={() => setIsOpen(false)}
         >
           <X className="w-6 h-6" />

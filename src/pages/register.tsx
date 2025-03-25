@@ -6,6 +6,7 @@ import { useState } from "react";
 import coverImage from "../assets/cover.png";
 import api from "../utils/baseURL";
 import InputField from "../components/input-field";
+import { API_ENDPOINTS } from "../constants/Api";
 
 // Schema validation với Zod
 const registerSchema = z
@@ -45,7 +46,7 @@ const Register = () => {
     setError(null);
 
     try {
-      const response = await api.post("/user/create", formData, {
+      const response = await api.post(API_ENDPOINTS.USER_REGISTER, formData, {
         headers: { "Content-Type": "application/json" },
       });
       if (response.status === 200) {

@@ -32,14 +32,20 @@ export type NavButtonProps = {
 };
 
 // ✅ Component dùng chung (không tách thành "chosen" & "unchosen" nữa)
-export const NavButton = ({ to, icon, label }: NavButtonProps) => {
-  const location = useLocation(); // Lấy URL hiện tại
-  const isActive = location.pathname === to; // Kiểm tra trạng thái active
+export const NavButton = ({ to, icon, label, onClick }: NavButtonProps) => {
+  const location = useLocation();
+  const isActive = to ? location.pathname === to : false; // Kiểm tra active
 
-  return (
-    <Link to={to} className={nav_Button({ isActive })}>
+  // ✅ Nếu có `onClick`, dùng `<button>`, nếu không thì dùng `<Link>`
+  return onClick ? (
+    <button className={nav_Button({ isActive })} onClick={onClick}>
       {icon}
-      <span className="hidden lg:inline">{label}</span>
+      <span>{label}</span>
+    </button>
+  ) : (
+    <Link to={to || "#"} className={nav_Button({ isActive })}>
+      {icon}
+      <span>{label}</span>
     </Link>
   );
 };

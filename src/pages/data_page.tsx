@@ -7,6 +7,7 @@ import SensorDashboard from "../components/real_data_chart";
 
 export default function CurrentData() {
   const [selectedData, setSelectedData] = useState("temperature");
+  
   return (
     <div className="lg:ml-70 items-center justify-center h-screen bg-gray-100 ">
       <div className="bg-white rounded-xl shadow-md z-0">

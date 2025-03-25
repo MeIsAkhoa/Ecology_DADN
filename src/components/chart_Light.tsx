@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import api from "../utils/baseURL";
 import Chart from "./chart";
+import { API_ENDPOINTS } from "../constants/Api";
 
 const Light = () => {
   const [data, setData] = useState<{ id: string; timestamp: string; numericValue: number }[]>([]);
@@ -13,7 +14,7 @@ const Light = () => {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await api.get("/adafruit/data/light", { params: { limit: 20 } });
+      const response = await api.get(API_ENDPOINTS.SENSOR_LIGHT, { params: { limit: 20 } });
 
       // Chỉ cập nhật state nếu dữ liệu thay đổi
       if (JSON.stringify(lastDataRef.current) !== JSON.stringify(response.data.result)) {

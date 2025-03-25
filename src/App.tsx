@@ -12,6 +12,7 @@ import Register from "./pages/register";
 import "./App.css";
 import ROUTES from "./constants/routes";
 import Sidebar from "./components/navigation";
+import LogoutButton from "./components/logout-button";
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
             <Route path={ROUTES.SETTINGS} element={<Settings />} />
             <Route path={ROUTES.CONFIG} element={<Config />} />
             <Route path={ROUTES.CURRENT_DATA} element={<CurrentData />} />
+            
           </Route>
 
           {/* Routes dùng layout cho Auth */}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import api from "../utils/baseURL";
 import Chart from "./chart";
+import { API_ENDPOINTS } from "../constants/Api";
 
 const Temperature = () => {
   const [data, setData] = useState<{ id: string; timestamp: string; numericValue: number }[]>([]);
@@ -13,7 +14,7 @@ const Temperature = () => {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await api.get("/adafruit/data/temperature", { params: { limit: 20 } });
+      const response = await api.get(API_ENDPOINTS.SENSOR_TEMPERATURE, { params: { limit: 20 } });
 
       // Chỉ cập nhật state nếu dữ liệu thay đổi
       if (JSON.stringify(lastDataRef.current) !== JSON.stringify(response.data.result)) {

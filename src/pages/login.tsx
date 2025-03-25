@@ -6,6 +6,7 @@ import LoginWithGoogle from "../components/google-login-button";
 import InputField from "../components/input-field"; // Import InputField
 import coverImage from "../assets/cover.png";
 import api from "../utils/baseURL";
+import { API_ENDPOINTS } from "../constants/Api";
 
 const loginSchema = z.object({
   username: z.string().min(6, "Username must be at least 6 characters"),
@@ -27,7 +28,7 @@ const Login = () => {
 
   const onSubmit = async (data: LoginFormInputs) => {
     try {
-      const response = await api.post("/login/token", data);
+      const response = await api.post(API_ENDPOINTS.LOGIN, data);
 
       if (response.data.code === 200) {
         localStorage.setItem("token", response.data.result.token);
@@ -67,18 +68,18 @@ const Login = () => {
         </h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-          <InputField
-            label="Username"
-            placeholder="Enter your username"
-            register={register("username")} // Truyền register thay vì name
-            error={errors.username?.message}
-          />
+        <InputField
+          label="Username"
+          placeholder="Enter your username"
+          {...register("username")} // Truyền toàn bộ props từ register
+          error={errors.username?.message}
+        />
 
           <InputField
             label="Password"
             type="password"
             placeholder="Enter your password"
-            register={register("password")} // Truyền register thay vì name
+            {...register("password")}
             error={errors.password?.message}
           />
 
