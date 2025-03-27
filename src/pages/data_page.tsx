@@ -1,8 +1,8 @@
 import { useState } from "react";
-import Humidity from "../components/chart_Humid";
-import Light from "../components/chart_Light";
-import SolidMoisture from "../components/chart_SoildMoisture";
-import Temperature from "../components/chart_Temperature";
+import Humidity from "../components/Chart_Humid";
+import Light from "../components/Chart_Light";
+import SolidMoisture from "../components/Chart_SoildMoisture";
+import Temperature from "../components/Chart_Temperature";
 import SensorDashboard from "../components/real_data_chart";
 
 export default function CurrentData() {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import api from "../utils/baseURL";
-import Chart from "./chart";
+import Chart from "./Chart";
 import { API_ENDPOINTS } from "../constants/Api";
 
 const Humidity = () => {

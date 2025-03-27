@@ -1,12 +1,13 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import LoginWithGoogle from "../components/google-login-button";
-import InputField from "../components/input-field"; // Import InputField
+import InputField from "../components/input-field";
 import coverImage from "../assets/cover.png";
-import api from "../utils/baseURL";
 import { API_ENDPOINTS } from "../constants/Api";
+import useFetch from "../hooks/useFetch";
+import ROUTES from "../constants/routes";
 
 const loginSchema = z.object({
   username: z.string().min(6, "Username must be at least 6 characters"),
@@ -15,7 +16,16 @@ const loginSchema = z.object({
 
 type LoginFormInputs = z.infer<typeof loginSchema>;
 
+interface LoginResponse {
+  code: number;
+  result: {
+    token: string;
+  };
+}
+
 const Login = () => {
+  const navigate = useNavigate();
+  const { error, loading, post } = useFetch<LoginResponse>();
   const {
     register,
     handleSubmit,
@@ -24,18 +34,15 @@ const Login = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
   const onSubmit = async (data: LoginFormInputs) => {
     try {
-      const response = await api.post(API_ENDPOINTS.LOGIN, data);
-
-      if (response.data.code === 200) {
+      const response = await post(API_ENDPOINTS.LOGIN, data);
+      if (response?.data?.code === 200) {
         localStorage.setItem("token", response.data.result.token);
-        window.location.href = "/";
+        navigate(ROUTES.HOME);
       }
-    } catch (error: any) {
-      setErrorMessage(error.response?.data?.message || "Đăng nhập thất bại!");
+    } catch (error) {
+      // Error is already handled by useFetch
     }
   };
 
@@ -62,18 +69,24 @@ const Login = () => {
       </div>
 
       {/* Form login */}
-      <div className="fixed right-[5%] bottom-25 bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
+      <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-md absolute top-70 right-10">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">
           Login
         </h2>
 
+        {error && (
+          <div className="mb-4 p-2 bg-red-100 text-red-600 rounded">
+            {error}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-        <InputField
-          label="Username"
-          placeholder="Enter your username"
-          {...register("username")} // Truyền toàn bộ props từ register
-          error={errors.username?.message}
-        />
+          <InputField
+            label="Username"
+            placeholder="Enter your username"
+            {...register("username")}
+            error={errors.username?.message}
+          />
 
           <InputField
             label="Password"
@@ -85,9 +98,12 @@ const Login = () => {
 
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
+            className={`w-full text-white py-2 rounded-lg transition ${
+              loading ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"
+            }`}
+            disabled={loading}
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
 
           <LoginWithGoogle />

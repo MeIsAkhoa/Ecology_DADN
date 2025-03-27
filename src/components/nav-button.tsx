@@ -25,25 +25,26 @@ export const nav_Button = cva(
 
 // ✅ Định nghĩa type props
 export type NavButtonProps = {
-  to: string;
   icon: React.ReactNode;
   label: string;
-  onClick?: () => void;
-};
+} & ({
+  to: string
+} | {
+  onClick: () => void;
+});
 
 // ✅ Component dùng chung (không tách thành "chosen" & "unchosen" nữa)
-export const NavButton = ({ to, icon, label, onClick }: NavButtonProps) => {
+export const NavButton = ({ icon, label, ...props }: NavButtonProps) => {
   const location = useLocation();
-  const isActive = to ? location.pathname === to : false; // Kiểm tra active
+  const isActive = 'to' in props ? location.pathname === props.to : false;
 
-  // ✅ Nếu có `onClick`, dùng `<button>`, nếu không thì dùng `<Link>`
-  return onClick ? (
-    <button className={nav_Button({ isActive })} onClick={onClick}>
+  return 'onClick' in props ? (
+    <button className={nav_Button({ isActive })} onClick={props.onClick}>
       {icon}
       <span>{label}</span>
     </button>
   ) : (
-    <Link to={to || "#"} className={nav_Button({ isActive })}>
+    <Link to={props.to} className={nav_Button({ isActive })}>
       {icon}
       <span>{label}</span>
     </Link>

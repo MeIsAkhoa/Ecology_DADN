@@ -2,11 +2,11 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import coverImage from "../assets/cover.png";
-import api from "../utils/baseURL";
 import InputField from "../components/input-field";
 import { API_ENDPOINTS } from "../constants/Api";
+import useFetch from "../hooks/useFetch";
+import ROUTES from "../constants/routes";
 
 // Schema validation với Zod
 const registerSchema = z
@@ -30,8 +30,7 @@ type RegisterFormInputs = z.infer<typeof registerSchema>;
 
 const Register = () => {
   const navigate = useNavigate();
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const { error, loading, post } = useFetch();
   const {
     register,
     handleSubmit,
@@ -42,21 +41,12 @@ const Register = () => {
 
   // Xử lý khi nhấn "Sign Up"
   const onSubmit = async (formData: RegisterFormInputs) => {
-    setLoading(true);
-    setError(null);
-
     try {
-      const response = await api.post(API_ENDPOINTS.USER_REGISTER, formData, {
-        headers: { "Content-Type": "application/json" },
-      });
-      if (response.status === 200) {
-        alert("Registration successful!");
-        navigate("/login");
-      }
-    } catch (error: any) {
-      setError(error.response?.data?.message || "Registration failed!");
-    } finally {
-      setLoading(false);
+      await post(API_ENDPOINTS.USER_REGISTER, formData);
+      alert("Registration successful!");
+      navigate(ROUTES.LOGIN);
+    } catch (error) {
+      // Error is already handled by useFetch
     }
   };
 
