@@ -6,7 +6,7 @@ import LoginWithGoogle from "../components/google-login-button";
 import InputField from "../components/input-field";
 import coverImage from "../assets/cover.png";
 import { API_ENDPOINTS } from "../constants/Api";
-import useFetch from "../hooks/useFetch";
+import useMutation from "../hooks/useMutation"; // Sử dụng useMutation thay vì useFetch
 import ROUTES from "../constants/routes";
 
 const loginSchema = z.object({
@@ -25,7 +25,8 @@ interface LoginResponse {
 
 const Login = () => {
   const navigate = useNavigate();
-  const { error, loading, post } = useFetch<LoginResponse>();
+  const { mutate, error, loading } = useMutation<LoginResponse>("POST", API_ENDPOINTS.LOGIN); // Dùng useMutation
+
   const {
     register,
     handleSubmit,
@@ -36,13 +37,13 @@ const Login = () => {
 
   const onSubmit = async (data: LoginFormInputs) => {
     try {
-      const response = await post(API_ENDPOINTS.LOGIN, data);
+      const response = await mutate(data);
       if (response?.data?.code === 200) {
         localStorage.setItem("token", response.data.result.token);
         navigate(ROUTES.HOME);
       }
     } catch (error) {
-      // Error is already handled by useFetch
+      // Error is already handled by useMutation
     }
   };
 

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import coverImage from "../assets/cover.png";
 import InputField from "../components/input-field";
 import { API_ENDPOINTS } from "../constants/Api";
-import useFetch from "../hooks/useFetch";
+import useMutation from "../hooks/useMutation"; // Thay useFetch bằng useMutation
 import ROUTES from "../constants/routes";
 
 // Schema validation với Zod
@@ -30,7 +30,8 @@ type RegisterFormInputs = z.infer<typeof registerSchema>;
 
 const Register = () => {
   const navigate = useNavigate();
-  const { error, loading, post } = useFetch();
+  const { mutate, error, loading } = useMutation("POST", API_ENDPOINTS.USER_REGISTER); // Dùng useMutation
+
   const {
     register,
     handleSubmit,
@@ -42,11 +43,11 @@ const Register = () => {
   // Xử lý khi nhấn "Sign Up"
   const onSubmit = async (formData: RegisterFormInputs) => {
     try {
-      await post(API_ENDPOINTS.USER_REGISTER, formData);
+      await mutate(formData);
       alert("Registration successful!");
       navigate(ROUTES.LOGIN);
     } catch (error) {
-      // Error is already handled by useFetch
+      // Error được xử lý trong useMutation
     }
   };
 
@@ -68,6 +69,12 @@ const Register = () => {
       {/* Form Sign Up */}
       <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-md absolute top-70 right-10">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">Sign Up</h2>
+
+        {error && (
+          <div className="mb-4 p-2 bg-red-100 text-red-600 rounded">
+            {error}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
           <InputField label="Username" {...register("username")} placeholder="Enter your username" error={errors.username?.message} />
