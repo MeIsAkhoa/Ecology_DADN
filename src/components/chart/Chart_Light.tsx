@@ -1,9 +1,9 @@
 import Chart from "./Chart";
-import usePollingFetch from "../hooks/usePollingFetch";
-import { API_ENDPOINTS } from "../constants/Api";
+import { API_ENDPOINTS } from "../../constants/Api";
+import useFetch from "../../hooks/useFetch";
 
 const Light = () => {
-  const { data, loading, error } = usePollingFetch<{ id: string; timestamp: string; numericValue: number }[]>(
+  const { data, loading, error } = useFetch<{ id: string; timestamp: string; numericValue: number }[]>(
     API_ENDPOINTS.SENSOR_LIGHT,
     { limit: 20 },
     30000

@@ -1,5 +1,6 @@
+import { FileCog } from "lucide-react";
 import React, { useState } from "react";
-import DataFile from "../assets/datafile.png";
+
 
 const DataRecord: React.FC = () => {
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
@@ -27,7 +28,8 @@ const DataRecord: React.FC = () => {
       {/* ĐẶT NGAY */}
       <div className="flex items-center justify-between bg-white p-4 rounded-lg shadow-md">
         <div className="flex items-center">
-          <img src={DataFile} className="w-10 h-10 mr-3" />
+        <FileCog className="w-10 h-10 mr-3"/>
+         
           <div>
             <p className="font-bold text-lg">Đặt Chu kỳ Thu thập Dữ liệu</p>
           </div>

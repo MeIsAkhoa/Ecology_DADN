@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import api from "../utils/baseURL";
-import { SENSOR_CARDS } from "../constants/sensorCards";
-import { API_ENDPOINTS } from "../constants/Api";
+import api from "../../utils/baseURL";
+import { SENSOR_CARDS } from "../../constants/SensorCards";
+import { API_ENDPOINTS } from "../../constants/Api";
 
 const SensorDashboard = () => {
   const [sensorData, setSensorData] = useState({
@@ -90,7 +90,7 @@ interface SensorCardProps {
   Icon: React.ElementType;
 }
 
-const SensorCard: React.FC<SensorCardProps> = ({ title, value, timestamp, standard, bgColor, Icon }) => {
+const SensorCard: React.FC<SensorCardProps> = ({ title, value, timestamp, bgColor, Icon }) => {
   const formatTimestamp = (timestamp: string | null) => {
     if (!timestamp) return "Chưa cập nhật";
     return new Date(timestamp).toLocaleString("vi-VN", {

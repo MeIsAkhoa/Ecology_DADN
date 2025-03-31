@@ -1,4 +1,8 @@
 module.exports = {
-    darkMode: 'class', // or 'media' if you want to use system preferences
-    // ... rest of the config
-  }
+  darkMode: "class", // Kích hoạt dark mode sử dụng class
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};

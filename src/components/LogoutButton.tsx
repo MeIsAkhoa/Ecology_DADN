@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { LogOut } from "lucide-react";
-import {NavButton} from "./nav-button"; // ✅ Import component NavButton đã sửa
-import ROUTES from "../constants/routes";
+import {NavButton} from "./NavButton"; // ✅ Import component NavButton đã sửa
+import ROUTES from "../constants/Routes";
 
 const LogoutButton = () => {
   const navigate = useNavigate();

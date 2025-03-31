@@ -2,12 +2,12 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
-import LoginWithGoogle from "../components/google-login-button";
-import InputField from "../components/input-field";
+import LoginWithGoogle from "../components/GoogleLoginButton";
+import InputField from "../components/InputField";
 import coverImage from "../assets/cover.png";
 import { API_ENDPOINTS } from "../constants/Api";
 import useMutation from "../hooks/useMutation"; // Sử dụng useMutation thay vì useFetch
-import ROUTES from "../constants/routes";
+import ROUTES from "../constants/Routes";
 
 const loginSchema = z.object({
   username: z.string().min(6, "Username must be at least 6 characters"),
@@ -38,8 +38,8 @@ const Login = () => {
   const onSubmit = async (data: LoginFormInputs) => {
     try {
       const response = await mutate(data);
-      if (response?.data?.code === 200) {
-        localStorage.setItem("token", response.data.result.token);
+      if (response?.code === 200) {
+        localStorage.setItem("token", response.result.token);
         navigate(ROUTES.HOME);
       }
     } catch (error) {
