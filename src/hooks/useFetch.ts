@@ -49,7 +49,7 @@ const useFetch = <T>(
     }
   }, [fetchData, interval]);
 
-  return { data, error, loading };
+  return { data, error, loading};
 };
 
 export default useFetch;

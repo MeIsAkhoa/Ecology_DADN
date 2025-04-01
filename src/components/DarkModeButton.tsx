@@ -3,49 +3,57 @@ import { Sun, Moon } from "lucide-react";
 
 const ToggleDarkMode = () => {
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    const savedMode = localStorage.getItem("darkMode");
-    if (savedMode !== null) {
-      return savedMode === "true";
+    if (typeof window !== 'undefined') {
+      const savedMode = localStorage.getItem("darkMode");
+      if (savedMode !== null) return savedMode === "true";
+      return window.matchMedia("(prefers-color-scheme: dark)").matches;
     }
-    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+    return false;
   });
 
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-    localStorage.setItem("darkMode", String(isDarkMode));
-  }, [isDarkMode]);
-
   const [isHovered, setIsHovered] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+    if (isMounted) {
+      const html = document.documentElement;
+      if (isDarkMode) {
+        html.classList.add("dark");
+        localStorage.setItem("darkMode", "true");
+      } else {
+        html.classList.remove("dark");
+        localStorage.setItem("darkMode", "false");
+      }
+    }
+  }, [isDarkMode, isMounted]);
+
+  if (!isMounted) return null;
 
   return (
-    <button
-      onClick={() => setIsDarkMode(!isDarkMode)}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className={`relative w-16 h-8 flex items-center rounded-full transition-all duration-500 shadow-lg overflow-hidden
-        ${isDarkMode ? "bg-indigo-900" : "bg-green-300"}
-        ${isHovered ? (isDarkMode ? "shadow-indigo-500/30" : "shadow-green-500/30") : ""}`}
-      aria-label={`Switch to ${isDarkMode ? "light" : "dark"} mode`}
-    >
-      {/* Background animation */}
-      <div className={`absolute inset-0 transition-opacity duration-500
-        ${isDarkMode ? "bg-gradient-to-br from-indigo-900 to-purple-900 opacity-100" : "bg-gradient-to-br from-green-300 to-green-400 opacity-100"}`}></div>
-      
-      {/* Toggle circle with icon */}
-      <div className={`absolute w-6 h-6 bg-white rounded-full shadow-lg transform transition-all duration-500 flex items-center justify-center
-        ${isDarkMode ? "translate-x-9" : "translate-x-1"}
-        ${isHovered ? "scale-110" : "scale-100"}`}>
+    <div className="fixed bottom-6 right-6 z-50">
+      <button
+        onClick={() => setIsDarkMode(!isDarkMode)}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className={`w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all duration-300
+          ${isDarkMode ? "bg-indigo-600 hover:bg-indigo-700" : "bg-green-400 hover:bg-green-500"}
+          ${isHovered ? "scale-110 shadow-xl" : "scale-100"}`}
+        aria-label={`Switch to ${isDarkMode ? "light" : "dark"} mode`}
+      >
         {isDarkMode ? (
-          <Moon className="w-4 h-4 text-indigo-800 transition-all duration-300" />
+          <Moon className="w-5 h-5 text-white" />
         ) : (
-          <Sun className="w-4 h-4 text-amber-500 transition-all duration-300" />
+          <Sun className="w-5 h-5 text-white" />
         )}
+      </button>
+      
+      {/* Tooltip */}
+      <div className={`absolute right-14 bottom-2 bg-gray-800 dark:bg-gray-700 text-white text-xs px-2 py-1 rounded-md transition-opacity duration-300
+        ${isHovered ? "opacity-100" : "opacity-0"}`}>
+        {isDarkMode ? "Light Mode" : "Dark Mode"}
       </div>
-    </button>
+    </div>
   );
 };
 
