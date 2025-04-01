@@ -1,0 +1,56 @@
+[
+    {
+      "id": 1,
+      "title": "Công Nghệ Tưới Tiêu Thông Minh",
+      "description": "Giải pháp tưới tiêu tự động tiết kiệm 40% lượng nước cho các vùng canh tác khô hạn",
+      "date": "10/11/2023",
+      "location": "Viện Nghiên cứu Nông nghiệp",
+      "imageUrl": "https://consosukien.vn/pic/News/Nam_2021/nong-nghiep-viet-nam-nam-2020-ban-linh-vuot-kho-gianh-thang-loi.jpg",
+      "category": "Công nghệ nông nghiệp"
+    },
+    {
+      "id": 2,
+      "title": "Mô Hình Nông Nghiệp Hữu Cơ",
+      "description": "Nông dân Đồng Tháp áp dụng thành công mô hình canh tác hữu cơ không dùng thuốc trừ sâu",
+      "date": "05/11/2023",
+      "location": "Đồng Tháp",
+      "imageUrl": "https://consosukien.vn/pic/News/Nam_2021/nong-nghiep-viet-nam-nam-2020-ban-linh-vuot-kho-gianh-thang-loi.jpg",
+      "category": "Nông nghiệp bền vững"
+    },
+    {
+      "id": 3,
+      "title": "Giống Lúa Mới Chịu Mặn",
+      "description": "Các nhà khoa học Việt Nam lai tạo thành công giống lúa có thể sinh trưởng ở độ mặn 4‰",
+      "date": "01/11/2023",
+      "location": "Viện Lúa ĐBSCL",
+      "imageUrl": "https://consosukien.vn/pic/News/Nam_2021/nong-nghiep-viet-nam-nam-2020-ban-linh-vuot-kho-gianh-thang-loi.jpg",
+      "category": "Nghiên cứu giống cây"
+    },
+    {
+        "id": 4,
+        "title": "Công Nghệ Tưới Tiêu Thông Minh",
+        "description": "Giải pháp tưới tiêu tự động tiết kiệm 40% lượng nước cho các vùng canh tác khô hạn",
+        "date": "10/11/2023",
+        "location": "Viện Nghiên cứu Nông nghiệp",
+        "imageUrl": "https://consosukien.vn/pic/News/Nam_2021/nong-nghiep-viet-nam-nam-2020-ban-linh-vuot-kho-gianh-thang-loi.jpg",
+        "category": "Công nghệ nông nghiệp"
+      },
+      {
+        "id": 5,
+        "title": "Mô Hình Nông Nghiệp Hữu Cơ",
+        "description": "Nông dân Đồng Tháp áp dụng thành công mô hình canh tác hữu cơ không dùng thuốc trừ sâu",
+        "date": "05/11/2023",
+        "location": "Đồng Tháp",
+        "imageUrl": "https://consosukien.vn/pic/News/Nam_2021/nong-nghiep-viet-nam-nam-2020-ban-linh-vuot-kho-gianh-thang-loi.jpg",
+        "category": "Nông nghiệp bền vững"
+      },
+      {
+        "id": 6,
+        "title": "Giống Lúa Mới Chịu Mặn",
+        "description": "Các nhà khoa học Việt Nam lai tạo thành công giống lúa có thể sinh trưởng ở độ mặn 4‰",
+        "date": "01/11/2023",
+        "location": "Viện Lúa ĐBSCL",
+        "imageUrl": "https://consosukien.vn/pic/News/Nam_2021/nong-nghiep-viet-nam-nam-2020-ban-linh-vuot-kho-gianh-thang-loi.jpg",
+        "category": "Nghiên cứu giống cây"
+      }
+  ]

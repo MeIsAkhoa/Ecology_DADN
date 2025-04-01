@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
-import Sidebar from "../components/navigation";
+import Sidebar from "../components/Navigation";
+import ROUTES from "../constants/Routes";
 
 const MainLayout = () => {
   const navigate = useNavigate();
@@ -9,14 +10,14 @@ const MainLayout = () => {
     // Kiểm tra nếu KHÔNG có token
     const token = localStorage.getItem("token");
     if (!token) {
-      navigate("login"); // Chuyển hướng về trang login
+      navigate(ROUTES.LOGIN); // Chuyển hướng về trang login
     }
   }, [navigate]);
 
   return (
     <div className="flex h-screen">
       <Sidebar />
-      <div className="flex-1 p-6">
+      <div className="flex-1">
         <Outlet />
       </div>
     </div>

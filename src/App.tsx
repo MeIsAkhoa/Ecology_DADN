@@ -2,16 +2,17 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import MainLayout from "./layouts/MainLayout";
 import AuthLayout from "./layouts/AuthLayout";
-import Home from "./pages/home";
-import Profile from "./pages/profile";
-import Settings from "./pages/setting";
-import Config from "./pages/config";
-import CurrentData from "./pages/data_page";
-import Login from "./pages/login";
-import Register from "./pages/register";
+import Home from "./pages/Home";
+import Profile from "./pages/Profile";
+import Settings from "./pages/Setting";
+import Config from "./pages/Config";
+import CurrentData from "./pages/DataPage";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import "./App.css";
-import ROUTES from "./constants/routes";
-import Sidebar from "./components/navigation";
+import ROUTES from "./constants/Routes";
+import News from "./pages/News";
+
 
 const App = () => {
   return (
@@ -25,6 +26,8 @@ const App = () => {
             <Route path={ROUTES.SETTINGS} element={<Settings />} />
             <Route path={ROUTES.CONFIG} element={<Config />} />
             <Route path={ROUTES.CURRENT_DATA} element={<CurrentData />} />
+            <Route path={ROUTES.NEWS} element={<News/>} />
+            
           </Route>
 
           {/* Routes dùng layout cho Auth */}

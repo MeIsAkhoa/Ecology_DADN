@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import api from "../utils/baseURL"; // Import axios instance
-import wateringCan from "../assets/watering.png";
+import api from "../../utils/baseURL"; // Import axios instance
+import wateringCan from "../../assets/watering.png";
 
 const WateringControl: React.FC = () => {
   const [isOn, setIsOn] = useState<boolean>(false);

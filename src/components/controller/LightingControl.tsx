@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from "../utils/baseURL"; // Import instance axios có token
-import Light from "../assets/lightbub.png";
+import axios from "../../utils/baseURL"; // Import instance axios có token
+import Light from "../../assets/lightbub.png"; // Import icon đèn
+import { log } from "console";
 
 const colors = [
   // { name: "Tắt Đèn", value: "off", colorClass: "bg-gray-500", textClass: "text-gray-500" },
