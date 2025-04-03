@@ -15,9 +15,9 @@ const MainLayout = () => {
   }, [navigate]);
 
   return (
-    <div className="flex h-screen">
+    <div className="flex ">
       <Sidebar />
-      <div className="flex-1">
+      <div className="flex-1 dark:bg-[#172A46]">
         <Outlet />
       </div>
     </div>

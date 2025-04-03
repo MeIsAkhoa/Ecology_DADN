@@ -71,7 +71,7 @@ const Sidebar = () => {
 
         {/* Main Navigation */}
         <nav className="flex-1 overflow-y-auto p-4 space-y-2 ">
-          <div className="mb-6 flex justify-center">
+          <div className="flex justify-center">
             <ToggleDarkMode />
           </div>
 
