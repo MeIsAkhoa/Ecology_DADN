@@ -63,15 +63,6 @@ const Register = () => {
 
       {/* Phần tiêu đề + form */}
       <div className="flex flex-col items-start justify-center space-y-10 w-full md:w-[55%] lg:w-[50%] pl-4 md:pl-12">
-        {/* Tiêu đề */}
-        <div className="text-left w-full px-2 md:px-0">
-          <h1 className="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-green-700 leading-tight">
-            Ecology & Environment
-          </h1>
-          <h1 className="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-black-700 leading-tight">
-            Illustrations
-          </h1>
-        </div>
 
         {/* Form đăng ký */}
         <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-[550px]">
