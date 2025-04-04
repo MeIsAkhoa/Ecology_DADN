@@ -17,24 +17,24 @@ export default function CurrentData() {
   };
 
   return (
-    <div className="lg:ml-70 min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4">
+    <div className="lg:ml-70 min-h-screen p-4 dark:bg-[#172A46]">
       {/* Phần dashboard chính */}
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-6 border border-gray-200">
-        <div className={`p-3 ${dataColors.soilMoisture} text-white font-medium`}>
+      <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-6 border border-gray-200 dark:bg-gray-600">
+        <div className={`p-3 bg-green-400 text-white font-medium dark:bg-green-600`}>
           📊 Thông Số Môi Trường
         </div>
         <SensorDashboard />
       </div>
 
       {/* Phần lựa chọn và hiển thị biểu đồ */}
-      <div className="bg-white rounded-xl shadow-lg border border-gray-200">
+      <div className="bg-white rounded-xl shadow-lg border border-gray-200 dark:bg-gray-600">
         <div className={`p-3 ${dataColors[selectedData]} text-white font-medium rounded-t-xl`}>
           📈 Biểu Đồ Chi Tiết
         </div>
         
         <div className="p-4">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
-            <h2 className="text-xl font-semibold text-gray-700">
+            <h2 className="text-xl font-semibold text-gray-700 dark:text-white">
               {selectedData === "temperature" && "🌡️ Nhiệt Độ"}
               {selectedData === "humidity" && "💧 Độ Ẩm Không Khí"}
               {selectedData === "light" && "☀️ Cường Độ Ánh Sáng"}
@@ -42,7 +42,7 @@ export default function CurrentData() {
             </h2>
             
             <select
-              className={`h-10 border-2 rounded-lg px-3 focus:ring-2 focus:ring-opacity-50 transition-all
+              className={`h-10 border-2 rounded-lg px-3 focus:ring-2 focus:ring-opacity-50 transition-all dark:bg-white
                 ${selectedData === "temperature" ? "border-orange-300 focus:ring-orange-200" : ""}
                 ${selectedData === "humidity" ? "border-blue-300 focus:ring-blue-200" : ""}
                 ${selectedData === "light" ? "border-amber-300 focus:ring-amber-200" : ""}

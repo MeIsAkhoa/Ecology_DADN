@@ -15,7 +15,7 @@ export default function Home() {
             🌿 Hệ Thống Quản Lý Môi Trường
           </h1>
           <p className="mt-4 text-2xl text-white max-w-2xl mx-auto">
-            Giám sát và điều khiển hệ thống thông minh để bảo vệ môi trường.
+            Giám sát và điều khiển hệ thống thông minh trong nhà kính.
           </p>
         </div>
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FaCalendarAlt, FaMapMarkerAlt, FaLeaf } from 'react-icons/fa';
+import { EmblaCarousel } from '../components/SliderNews';
 
 interface NewsItem {
   id: number;
@@ -36,15 +37,16 @@ export default function News() {
   }
 
   return (
-    <div className="lg:ml-80 max-w-6xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-green-800 mb-8 text-center">
+    <div className="lg:ml-80 max-w-6xl mx-auto px-4 py-8 dark:bg-[#172A46]">
+     
+      <h1 className="text-3xl font-bold text-green-800 mb-8 text-center dark:text-green-600">
         <FaLeaf className="inline mr-2" />
         Tin Tức Nông Nghiệp Nổi Bật
       </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
         {news.map((item) => (
-          <div key={item.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+          <div key={item.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow ">
             <div className="h-48 overflow-hidden">
               <img 
                 src={item.imageUrl} 
@@ -53,7 +55,7 @@ export default function News() {
               />
             </div>
             <div className="p-6">
-              <span className="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full mb-2">
+              <span className="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full mb-2 dark:bg-green-600 dark:text-white">
                 {item.category}
               </span>
               <h2 className="text-xl font-bold text-gray-800 mb-2">{item.title}</h2>
