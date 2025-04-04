@@ -57,7 +57,7 @@ const Login = () => {
       />
 
       {/* Tiêu đề */}
-      <div className="text-left fixed right-[5%] top-[10%] w-full max-w-md">
+      <div className="text-left fixed right-[10%] top-[8%] w-full max-w-md">
         <h1 className="text-6xl font-bold text-green-700 leading-[1.2]">
           Ecology &
         </h1>
@@ -70,7 +70,7 @@ const Login = () => {
       </div>
 
       {/* Form login */}
-      <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-md absolute top-70 right-10">
+      <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-md absolute top-75 right-45">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">
           Login
         </h2>

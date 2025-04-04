@@ -1,54 +1,44 @@
-# React + TypeScript + Vite
+Ecology Dashboard Project
+🛠 Technologies Used
+Frontend:
+React: A JavaScript library for building user interfaces.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+TailwindCSS: A utility-first CSS framework for rapid UI development.
 
-Currently, two official plugins are available:
+Vite: A fast build and development tool for React.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Backend:
+Java & Spring Boot: A powerful framework for building REST APIs and handling data.
 
-## Expanding the ESLint configuration
+Spring Security: Ensures authentication and authorization security.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Spring Data JPA: Simplifies database interaction.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+🚀 How to Run the Project
+Start the Frontend:
+cd Ecology-Dashboard-Client
+npm install
+npm run dev
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Website Screenshot:
+1. Home
+- Normal:
+![Alt Text](./webscreenshot/home.png)
+- Darkmode:
+![Alt Text](./webscreenshot/home-dark.png)
+2. Data Page:
+- Normal:
+![Alt Text](./webscreenshot/data.png)
+- Darkmode:
+![Alt Text](./webscreenshot/data-dark.png)
+3. News Page:
+- Normal:
+![Alt Text](./webscreenshot/news.png)
+- Darkmode:
+![Alt Text](./webscreenshot/news-dark.png)
+4. Profile Page:
+- Normal:
+![Alt Text](./webscreenshot/profile.png)
+- Darkmode:
+![Alt Text](./webscreenshot/profile-dark.png)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
