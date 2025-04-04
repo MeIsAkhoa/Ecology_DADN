@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import coverImage from "../assets/cover.png";
 import InputField from "../components/InputField";
 import { API_ENDPOINTS } from "../constants/Api";
-import useMutation from "../hooks/useMutation"; // Thay useFetch bằng useMutation
+import useMutation from "../hooks/useMutation";
 import ROUTES from "../constants/Routes";
 
 // Schema validation với Zod
@@ -30,7 +30,7 @@ type RegisterFormInputs = z.infer<typeof registerSchema>;
 
 const Register = () => {
   const navigate = useNavigate();
-  const { mutate, error, loading } = useMutation("POST", API_ENDPOINTS.USER_REGISTER); // Dùng useMutation
+  const { mutate, error, loading } = useMutation("POST", API_ENDPOINTS.USER_REGISTER);
 
   const {
     register,
@@ -40,7 +40,6 @@ const Register = () => {
     resolver: zodResolver(registerSchema),
   });
 
-  // Xử lý khi nhấn "Sign Up"
   const onSubmit = async (formData: RegisterFormInputs) => {
     try {
       await mutate(formData);
@@ -52,63 +51,89 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F8F8EC] relative">
-      {/* Ảnh nền */}
-      <img
-        src={coverImage}
-        alt="Ecology Illustration"
-        className="hidden md:block absolute left-10 top-20 w-[100%] max-w-[700px] opacity-100"
-      />
-      {/* Tiêu đề */}
-      <div className="absolute top-10 left-170 text-left">
-        <h1 className="text-6xl font-bold text-green-700 leading-[1.2]">Ecology &</h1>
-        <h1 className="text-6xl font-bold text-green-700 leading-[1.2]">Environment</h1>
-        <h1 className="text-6xl font-bold text-gray-900 leading-[1.2]">Illustrations</h1>
+    <div className="min-h-screen flex flex-col md:flex-row items-center justify-center bg-[#F8F8EC] px-[5%] py-12 gap-y-10 md:gap-x-[5%]">
+      {/* Ảnh minh họa bên trái */}
+      <div className="w-full md:w-[45%] lg:w-[50%] flex justify-center">
+        <img
+          src={coverImage}
+          alt="Ecology Illustration"
+          className="w-full h-auto object-contain"
+        />
       </div>
 
-      {/* Form Sign Up */}
-      <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-md absolute top-70 right-10">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">Sign Up</h2>
+      {/* Phần tiêu đề + form */}
+      <div className="flex flex-col items-start justify-center space-y-10 w-full md:w-[55%] lg:w-[50%] pl-4 md:pl-12">
+        {/* Tiêu đề */}
+        <div className="text-left w-full px-2 md:px-0">
+          <h1 className="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-green-700 leading-tight">
+            Ecology & Environment
+          </h1>
+          <h1 className="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-black-700 leading-tight">
+            Illustrations
+          </h1>
+        </div>
 
-        {error && (
-          <div className="mb-4 p-2 bg-red-100 text-red-600 rounded">
-            {error}
-          </div>
-        )}
+        {/* Form đăng ký */}
+        <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-[550px]">
+          <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">Sign Up</h2>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-          <InputField label="Username" {...register("username")} placeholder="Enter your username" error={errors.username?.message} />
-          <InputField label="Email" {...register("email")} type="email" placeholder="Enter your email" error={errors.email?.message} />
-          <InputField label="First Name" {...register("firstname")} placeholder="Enter your first name" error={errors.firstname?.message} />
-          <InputField label="Last Name" {...register("lastname")} placeholder="Enter your last name" error={errors.lastname?.message} />
-          <InputField label="Password" {...register("password")} type="password" placeholder="Enter your password" error={errors.password?.message} />
-          <InputField label="Confirm Password" {...register("confirmPassword")} type="password" placeholder="Confirm your password" error={errors.confirmPassword?.message} />
-          <InputField label="Phone Number" {...register("phonenum")} placeholder="Enter your phone number" error={errors.phonenum?.message} />
-          <InputField label="Date of Birth" {...register("dob")} type="date" error={errors.dob?.message} />
+          {error && (
+            <div className="mb-4 p-2 bg-red-100 text-red-600 rounded">
+              {error}
+            </div>
+          )}
 
-          {/* Gender */}
-          <div>
-            <label className="block text-gray-700 font-medium">Gender</label>
-            <select
-              {...register("gender")}
-              className="w-full px-4 py-1.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-            >
-              <option value="nam">Male</option>
-              <option value="nu">Female</option>
-              <option value="khac">Other</option>
-            </select>
-            {errors.gender && <p className="text-red-500 text-sm">{errors.gender.message}</p>}
-          </div>
-
-          {/* Sign Up Button */}
-          <button
-            type="submit"
-            className={`w-full text-white py-2 rounded-lg transition ${loading ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"}`}
-            disabled={loading}
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[75vh] overflow-y-auto"
           >
-            {loading ? "Registering..." : "Sign Up"}
-          </button>
-        </form>
+            <InputField label="Username" {...register("username")} placeholder="Enter your username" error={errors.username?.message} />
+            <InputField label="Email" {...register("email")} type="email" placeholder="Enter your email" error={errors.email?.message} />
+            <InputField label="First Name" {...register("firstname")} placeholder="Enter your first name" error={errors.firstname?.message} />
+            <InputField label="Last Name" {...register("lastname")} placeholder="Enter your last name" error={errors.lastname?.message} />
+            <InputField label="Password" {...register("password")} type="password" placeholder="Enter your password" error={errors.password?.message} />
+            <InputField label="Confirm Password" {...register("confirmPassword")} type="password" placeholder="Confirm your password" error={errors.confirmPassword?.message} />
+            <InputField label="Phone Number" {...register("phonenum")} placeholder="Enter your phone number" error={errors.phonenum?.message} />
+            <InputField label="Date of Birth" {...register("dob")} type="date" error={errors.dob?.message} />
+
+            {/* Gender */}
+            <div className="col-span-1 md:col-span-2">
+              <label className="block text-gray-700 font-medium mb-1">Gender</label>
+              <select
+                {...register("gender")}
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              >
+                <option value="nam">Male</option>
+                <option value="nu">Female</option>
+                <option value="khac">Other</option>
+              </select>
+              {errors.gender && <p className="text-red-500 text-sm">{errors.gender.message}</p>}
+            </div>
+
+            {/* Submit */}
+            <div className="col-span-1 md:col-span-2">
+              <button
+                type="submit"
+                className={`w-full text-white py-2 rounded-lg transition ${
+                  loading ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"
+                }`}
+                disabled={loading}
+              >
+                {loading ? "Registering..." : "Sign Up"}
+              </button>
+            </div>
+
+            {/* Link login */}
+            <div className="col-span-1 md:col-span-2">
+              <p className="mt-2 text-center text-gray-600 text-sm">
+                Already have an account?{" "}
+                <a href="/login" className="text-blue-500 hover:underline font-medium">
+                  Sign In
+                </a>
+              </p>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
