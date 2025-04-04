@@ -11,31 +11,34 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import "./App.css";
 import ROUTES from "./constants/Routes";
-
+import News from "./pages/News";
+import { ThemeProvider } from "./components/provider/ThemeProvider";
 
 const App = () => {
   return (
-    <GoogleOAuthProvider clientId="918105208926-vc3sjjcr244asgnu6fvfbqirmjk2fum1.apps.googleusercontent.com">
-      <Router>
-        <Routes>
-          {/* Routes dùng layout chính */}
-          <Route element={<MainLayout />}>
-            <Route path={ROUTES.HOME} element={<Home />} />
-            <Route path={ROUTES.PROFILE} element={<Profile />} />
-            <Route path={ROUTES.SETTINGS} element={<Settings />} />
-            <Route path={ROUTES.CONFIG} element={<Config />} />
-            <Route path={ROUTES.CURRENT_DATA} element={<CurrentData />} />
-            
-          </Route>
+    <ThemeProvider>
+      <GoogleOAuthProvider clientId="918105208926-vc3sjjcr244asgnu6fvfbqirmjk2fum1.apps.googleusercontent.com">
+        <Router>
+          <Routes>
+            {/* Routes dùng layout chính */}
+            <Route element={<MainLayout />}>
+              <Route path={ROUTES.HOME} element={<Home />} />
+              <Route path={ROUTES.PROFILE} element={<Profile />} />
+              <Route path={ROUTES.SETTINGS} element={<Settings />} />
+              <Route path={ROUTES.CONFIG} element={<Config />} />
+              <Route path={ROUTES.CURRENT_DATA} element={<CurrentData />} />
+              <Route path={ROUTES.NEWS} element={<News />} />
+            </Route>
 
-          {/* Routes dùng layout cho Auth */}
-          <Route element={<AuthLayout />}>
-            <Route path={ROUTES.LOGIN} element={<Login />} />
-            <Route path={ROUTES.REGISTER} element={<Register />} />
-          </Route>
-        </Routes>
-      </Router>
-    </GoogleOAuthProvider>
+            {/* Routes dùng layout cho Auth */}
+            <Route element={<AuthLayout />}>
+              <Route path={ROUTES.LOGIN} element={<Login />} />
+              <Route path={ROUTES.REGISTER} element={<Register />} />
+            </Route>
+          </Routes>
+        </Router>
+      </GoogleOAuthProvider>
+    </ThemeProvider>
   );
 };
 

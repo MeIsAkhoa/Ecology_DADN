@@ -8,9 +8,9 @@ interface UseFetchReturn<T> {
 }
 
 const useFetch = <T>(
-  url: string, 
-  params?: object, 
-  interval?: number 
+  url: string,
+  params?: object,
+  interval?: number
 ): UseFetchReturn<T> => {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -21,18 +21,23 @@ const useFetch = <T>(
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await api.get<T>(url, { params });
+      const response = await api.get<{ code: number; message: string; result: T }>(url, { params });
 
-      // Chỉ cập nhật nếu dữ liệu thay đổi
-      if (JSON.stringify(lastDataRef.current) !== JSON.stringify(response.data)) {
-        setData(response.data);
-        lastDataRef.current = response.data;
-        console.log("✅ Dữ liệu mới cập nhật!");
+      if (response.data.code === 200) {
+        const newData = response.data.result;
+
+        if (JSON.stringify(lastDataRef.current) !== JSON.stringify(newData)) {
+          setData(newData);
+          lastDataRef.current = newData;
+          console.log("✅ Dữ liệu mới cập nhật!");
+        } else {
+          console.log("🔄 Dữ liệu không thay đổi, không cập nhật.");
+        }
+
+        setError(null);
       } else {
-        console.log("🔄 Dữ liệu không thay đổi, không cập nhật.");
+        setError(response.data.message || "Lỗi không xác định từ API");
       }
-
-      setError(null);
     } catch (err: any) {
       setError(err.response?.data?.message || "Lỗi khi lấy dữ liệu");
     } finally {

@@ -1,7 +1,7 @@
 const Settings = () => {
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Cài đặt</h1>
+    <div className="h-screen lg:ml-80 p-6 bg-gray-100 dark:bg-[#172A46]">
+      <h1 className=""></h1>
 
     </div>
   );

@@ -14,7 +14,7 @@ const Temperature = () => {
 
   return (
     <div className="p-4">
-      <Chart data={data || []} color="#ff7300" title="Temperature Data" />
+      <Chart data={data || []} color="#ff7300" title="" />
     </div>
   );
 };

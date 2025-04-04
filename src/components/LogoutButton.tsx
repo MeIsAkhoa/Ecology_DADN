@@ -14,7 +14,7 @@ const LogoutButton = () => {
   return (
     <NavButton
       
-      icon={<LogOut className="w-6 h-6 mr-1.5 text-red-500" />}
+      icon={<LogOut className="w-5 h-5  text-red-500" />}
       label="Đăng xuất"
       onClick={handleLogout} // ✅ Truyền sự kiện onClick
     />

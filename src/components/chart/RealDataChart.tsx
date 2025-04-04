@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import api from "../../utils/baseURL";
-import { SENSOR_CARDS } from "../../constants/SensorCards";
+import { SENSOR_CARDS } from "../../constants/sensorCards";
 import { API_ENDPOINTS } from "../../constants/Api";
 
 const SensorDashboard = () => {

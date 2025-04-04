@@ -24,7 +24,7 @@ const DataRecord: React.FC = () => {
   };
 
   return (
-    <div className="p-4 bg-gradient-to-r from-green-100 to-green-250 rounded-lg">
+    <div className="p-4 bg-gradient-to-r from-green-100 to-green-250 rounded-lg dark:from-green-200 dark:to-green-400">
       {/* ĐẶT NGAY */}
       <div className="flex items-center justify-between bg-white p-4 rounded-lg shadow-md">
         <div className="flex items-center">
@@ -44,7 +44,7 @@ const DataRecord: React.FC = () => {
 
       {/* POPUP */}
       {isPopupOpen && (
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <div className="absolute top-1/2 left-3/5 transform -translate-x-1/2 -translate-y-1/2">
           <div className="bg-white p-6 rounded-lg shadow-lg w-96">
             <h2 className="text-xl font-bold text-center mb-4">Đặt Chu kỳ Thu thập Dữ liệu</h2>
 
