@@ -7,16 +7,22 @@ const ToggleDarkMode = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="fixed bottom-165 left-365 z-50 border-black border-1 rounded-full">
+    <div className="fixed z-50 
+      bottom-4 right-4  
+      md:bottom-6 md:right-6 
+      lg:top-10 lg:left-260  
+      xl:top-10 xl:left-365
+       rounded-full
+      transition-all duration-300">
       <button
-        onClick={() => toggleDarkMode()}
+        onClick={toggleDarkMode}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         className={`w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all duration-300
           ${
             isDarkMode
               ? "bg-indigo-600 hover:bg-indigo-700"
-              : "bg-green-400 hover:bg-green-500"
+              : "bg-amber-500 hover:bg-amber-600"
           }
           ${isHovered ? "scale-110 shadow-xl" : "scale-100"}`}
         aria-label={`Switch to ${isDarkMode ? "light" : "dark"} mode`}
@@ -28,10 +34,14 @@ const ToggleDarkMode = () => {
         )}
       </button>
 
-      {/* Tooltip */}
+      {/* Tooltip - Ẩn trên mobile, hiện từ tablet trở lên */}
       <div
-        className={`absolute right-14 bottom-2 bg-gray-800 dark:bg-gray-700 text-white text-xs px-2 py-1 rounded-md transition-opacity duration-300
-        ${isHovered ? "opacity-100" : "opacity-0"}`}
+        className={`absolute right-14 -top-2  // Đặt tooltip phía trên
+          bg-gray-800 dark:bg-gray-700 text-white text-xs px-2 py-1 rounded-md 
+          transition-opacity duration-300
+          ${isHovered ? "opacity-100" : "opacity-0"}
+          hidden md:block  // Ẩn trên mobile, hiện từ tablet
+        `}
       >
         {isDarkMode ? "Light Mode" : "Dark Mode"}
       </div>

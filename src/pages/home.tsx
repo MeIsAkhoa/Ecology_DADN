@@ -1,8 +1,10 @@
 import BubbleIcon from "../components/BubbleIcon";
+import NotificationButton from "../components/NotificationButton";
 
 export default function Home() {
   return (
     <div className="lg:ml-64 items-center justify-center h-screen bg-gray-100">
+      <NotificationButton />
       <div
         className="relative min-h-screen flex items-center justify-center bg-cover bg-center"
         style={{ backgroundImage: "url('https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')" }}
