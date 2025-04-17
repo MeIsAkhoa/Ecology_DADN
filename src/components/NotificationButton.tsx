@@ -1,16 +1,69 @@
 import { useState, useRef, useEffect } from "react";
 import { Bell, BellDot } from "lucide-react";
+import useFetch from "../hooks/useFetch";
+import { API_ENDPOINTS } from "../constants/Api";
+
+interface Notification {
+  name_device: string;
+  message: string;
+  timestamp: string;
+  read?: boolean;
+}
+
+interface NotificationApiResponse {
+  content: Notification[];
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+    // ... các trường khác
+  };
+  // ... các trường phân trang khác
+}
 
 const NotificationButton = () => {
-  const [hasUnread, setHasUnread] = useState(true); // Trạng thái thông báo chưa đọc
-  const [isOpen, setIsOpen] = useState(false); // Trạng thái popup
+  const [hasUnread, setHasUnread] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const popupRef = useRef<HTMLDivElement>(null);
 
-  // Đóng popup khi click bên ngoài
+  // Sử dụng useFetch hook
+  const {
+    data: apiResponse,
+    error,
+    loading,
+    refresh,
+  } = useFetch<NotificationApiResponse>(
+    `${API_ENDPOINTS.NOTIFICATION}`,
+    {},
+    60000 // 1 phút refresh một lần
+  );
+
+  // Format notifications từ API response
+  const notifications =
+    apiResponse?.content?.map((notif) => ({
+      ...notif,
+      read: false, // Mặc định là chưa đọc
+    })) || [];
+
+  // Kiểm tra thông báo chưa đọc khi dữ liệu thay đổi
+  useEffect(() => {
+    if (apiResponse?.content) {
+      setHasUnread(notifications.some((notif) => !notif.read));
+    }
+  }, [apiResponse]);
+
+  // Đánh dấu tất cả là đã đọc
+  const markAsRead = () => {
+    setHasUnread(false);
+  };
+
+  // Xử lý click outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
+      if (
+        popupRef.current &&
+        !popupRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -19,40 +72,31 @@ const NotificationButton = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Dữ liệu thông báo mẫu
-  const notifications = [
-    {
-      id: 1,
-      title: "Hệ thống cập nhật",
-      message: "Phiên bản mới 2.0 đã sẵn sàng",
-      time: "10 phút trước",
-      read: false
-    },
-    {
-      id: 2,
-      title: "Cảnh báo nhiệt độ",
-      message: "Nhiệt độ vượt ngưỡng tại khu vực A",
-      time: "1 giờ trước",
-      read: true
-    },
-    {
-      id: 3,
-      title: "Bảo trì hệ thống",
-      message: "Hệ thống sẽ bảo trì vào 02:00 - 04:00",
-      time: "1 ngày trước",
-      read: true
-    }
-  ];
-
   const togglePopup = () => {
-    setIsOpen(!isOpen);
-    if (!isOpen && hasUnread) {
-      setHasUnread(false); // Đánh dấu đã đọc khi mở popup
+    const newState = !isOpen;
+    setIsOpen(newState);
+
+    if (newState && hasUnread) {
+      markAsRead();
     }
   };
 
+  const formatTime = (timestamp: string) => {
+    const now = new Date();
+    const notificationTime = new Date(timestamp);
+    const diffInMinutes = Math.floor(
+      (now.getTime() - notificationTime.getTime()) / 60000
+    );
+
+    if (diffInMinutes < 1) return "Vừa xong";
+    if (diffInMinutes < 60) return `${diffInMinutes} phút trước`;
+    if (diffInMinutes < 1440)
+      return `${Math.floor(diffInMinutes / 60)} giờ trước`;
+    return `${Math.floor(diffInMinutes / 1440)} ngày trước`;
+  };
+
   return (
-    <div 
+    <div
       className="fixed z-50 
         top-4 right-10  
         md:bottom-6 md:right-24 
@@ -82,38 +126,40 @@ const NotificationButton = () => {
         )}
       </button>
 
-      {/* Tooltip */}
-      <div
-        className={`absolute right-14 -top-2
-          bg-gray-800 dark:bg-gray-700 text-white text-xs px-2 py-1 rounded-md 
-          transition-opacity duration-300
-          ${isHovered ? "opacity-100" : "opacity-0"}
-          hidden md:block
-        `}
-      >
-        Thông báo
-      </div>
-
       {/* Popup thông báo */}
       {isOpen && (
-        <div className="absolute right-10 top-5  md:bottom-16 w-72 sm:w-80 bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
+        <div className="absolute right-10 top-5 md:bottom-16 w-72 sm:w-80 bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
           <div className="p-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700">
-            <h3 className="font-semibold text-gray-800 dark:text-white">Thông báo</h3>
+            <h3 className="font-semibold text-gray-800 dark:text-white">
+              Thông báo
+            </h3>
           </div>
           <div className="max-h-96 overflow-y-auto">
-            {notifications.length > 0 ? (
+            {loading ? (
+              <div className="p-4 text-center text-gray-500 dark:text-gray-400">
+                Đang tải...
+              </div>
+            ) : error ? (
+              <div className="p-4 text-center text-red-500 dark:text-red-400">
+                {error}
+              </div>
+            ) : notifications.length > 0 ? (
               notifications.map((notification) => (
-                <div 
-                  key={notification.id} 
+                <div
+                  key={`${notification.name_device}-${notification.timestamp}`}
                   className={`p-3 border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors
-                    ${!notification.read ? "bg-amber-50 dark:bg-amber-900/30" : ""}`}
+                    ${
+                      !notification.read
+                        ? "bg-amber-50 dark:bg-blue-300/30"
+                        : ""
+                    }`}
                 >
                   <div className="flex justify-between items-start">
                     <h4 className="font-medium text-gray-800 dark:text-white">
-                      {notification.title}
+                      {notification.name_device}
                     </h4>
                     <span className="text-xs text-gray-500 dark:text-gray-400">
-                      {notification.time}
+                      {formatTime(notification.timestamp)}
                     </span>
                   </div>
                   <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
@@ -128,8 +174,11 @@ const NotificationButton = () => {
             )}
           </div>
           <div className="p-2 text-center border-t border-gray-200 dark:border-gray-700">
-            <button className="text-sm text-blue-500 hover:text-blue-700 dark:hover:text-blue-400">
-              Xem tất cả
+            <button
+              className="text-sm text-blue-500 hover:text-blue-700 dark:hover:text-blue-400"
+              onClick={refresh}
+            >
+              Tải lại
             </button>
           </div>
         </div>

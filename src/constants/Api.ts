@@ -15,5 +15,13 @@ export const API_ENDPOINTS = {
     CONTROL_WATER_PUMP: "/adafruit/control/water-pump",
     CONTROL_RELAY: "/adafruit/control/relay",
     CONTROL_LED: "/adafruit/control/led",
+    THRESHOLD_ALL: "/threshold/all",
+    THRESHOLD_TEMPERATURE: "/threshold/temperature",
+    THRESHOLD_HUMIDITY: "/threshold/humidity",
+    THRESHOLD_SOIL: "/threshold/soil",
+    THRESHOLD_LIGHT: "/threshold/light",
+
+    // Notification API
+    NOTIFICATION: "/notification/all",
   };
   
