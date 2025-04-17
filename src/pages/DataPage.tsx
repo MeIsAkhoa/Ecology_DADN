@@ -17,7 +17,7 @@ export default function CurrentData() {
   };
 
   return (
-    <div className="lg:ml-70 min-h-screen p-4 dark:bg-[#172A46]">
+    <div className="lg:ml-70 min-h-screen p-4 dark:bg-[#172A46]" >
       {/* Phần dashboard chính */}
       <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-6 border border-gray-200 dark:bg-gray-600">
         <div className={`p-3 bg-green-400 text-white font-medium dark:bg-green-600`}>

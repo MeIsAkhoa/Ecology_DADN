@@ -24,7 +24,7 @@ const Profile: React.FC = () => {
         <img 
           src={defaultBg} 
           alt="Profile background" 
-          className="w-full h-full object-cover "
+          className="w-full h-full object-cover"
         />
         <div className="absolute bottom-6 left-6 flex items-end">
           <div className="w-28 h-28 rounded-full border-4 border-white dark:border-gray-800 bg-gray-200 dark:bg-gray-600 overflow-hidden shadow-lg">

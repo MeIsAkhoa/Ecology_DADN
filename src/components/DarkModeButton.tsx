@@ -33,18 +33,6 @@ const ToggleDarkMode = () => {
           <Sun className="w-5 h-5 text-white" />
         )}
       </button>
-
-      {/* Tooltip - Ẩn trên mobile, hiện từ tablet trở lên */}
-      <div
-        className={`absolute right-14 -top-2  // Đặt tooltip phía trên
-          bg-gray-800 dark:bg-gray-700 text-white text-xs px-2 py-1 rounded-md 
-          transition-opacity duration-300
-          ${isHovered ? "opacity-100" : "opacity-0"}
-          hidden md:block  // Ẩn trên mobile, hiện từ tablet
-        `}
-      >
-        {isDarkMode ? "Light Mode" : "Dark Mode"}
-      </div>
     </div>
   );
 };

@@ -51,11 +51,11 @@ const Login = () => {
 
     <div className="min-h-screen flex flex-col md:flex-row items-center justify-center bg-[#F8F8EC] px-[5%] py-12 gap-y-10 md:gap-x-[5%]">
       {/* Ảnh minh họa bên trái */}
-      <div className="w-full md:w-[45%] lg:w-[50%] flex justify-center">
+      <div className="w-full md:w-[45%] lg:w-[50%] flex justify-center lg:block hidden">
         <img
           src={coverImage}
           alt="Ecology Illustration"
-          className="w-full h-auto object-contain"
+          className="w-full h-auto object-contain "
         />
       </div>
 
