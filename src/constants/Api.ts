@@ -1,8 +1,9 @@
 export const API_ENDPOINTS = {
     // User API
-    USER_REGISTER: "/user/create",
+    USER_REGISTER: "/user",
     USER_PROFILE: "/user/profile",
-    LOGIN: "/login/token",
+    USER_UPDATE: "/user", // Added for PUT endpoint
+    LOGIN: "/auth/token",
   
     // Sensor Data API
     SENSOR_LATEST: "/adafruit/latest",
@@ -15,5 +16,4 @@ export const API_ENDPOINTS = {
     CONTROL_WATER_PUMP: "/adafruit/control/water-pump",
     CONTROL_RELAY: "/adafruit/control/relay",
     CONTROL_LED: "/adafruit/control/led",
-  };
-  
+};

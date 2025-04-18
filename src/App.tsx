@@ -9,6 +9,7 @@ import Config from "./pages/Config";
 import CurrentData from "./pages/DataPage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import UpdateProfile from './pages/updateProfile';
 import "./App.css";
 import ROUTES from "./constants/Routes";
 import News from "./pages/News";
@@ -24,6 +25,7 @@ const App = () => {
             <Route element={<MainLayout />}>
               <Route path={ROUTES.HOME} element={<Home />} />
               <Route path={ROUTES.PROFILE} element={<Profile />} />
+              <Route path={ROUTES.UPDATE_PROFILE} element={<UpdateProfile />} />
               <Route path={ROUTES.SETTINGS} element={<Settings />} />
               <Route path={ROUTES.CONFIG} element={<Config />} />
               <Route path={ROUTES.CURRENT_DATA} element={<CurrentData />} />

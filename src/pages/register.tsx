@@ -46,7 +46,7 @@ const Register = () => {
       alert("Registration successful!");
       navigate(ROUTES.LOGIN);
     } catch (error) {
-      // Error được xử lý trong useMutation
+      // Error handled in useMutation
     }
   };
 

@@ -47,10 +47,12 @@ const Profile: React.FC = () => {
         <div className="lg:col-span-2">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">Thông tin cá nhân</h2>
-            <button className="flex items-center px-4 py-2 bg-green-500 hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700 text-white rounded-lg transition-colors">
+         <a href="/profile/edit">
+         <button className="flex items-center px-4 py-2 bg-green-500 hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700 text-white rounded-lg transition-colors">
               <Edit size={18} className="mr-2" />
               Cập nhật hồ sơ
             </button>
+         </a>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

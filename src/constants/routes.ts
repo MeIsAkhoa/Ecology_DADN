@@ -7,6 +7,7 @@ const ROUTES = {
     LOGIN: "/login",
     REGISTER: "/register",
     NEWS: "/news",
+    UPDATE_PROFILE: '/profile/edit',
   };
   
   export default ROUTES;
