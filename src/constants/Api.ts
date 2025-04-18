@@ -4,7 +4,8 @@ export const API_ENDPOINTS = {
     USER_PROFILE: "/user/profile",
     USER_UPDATE: "/user", // Added for PUT endpoint
     LOGIN: "/auth/token",
-  
+    LOGOUT: "/auth/logout",
+
     // Sensor Data API
     SENSOR_LATEST: "/adafruit/latest",
     SENSOR_TEMPERATURE: "/adafruit/data/temperature",
