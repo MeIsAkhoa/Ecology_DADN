@@ -1,7 +1,6 @@
 import { SENSOR_CARDS } from "../../constants/sensorCards";
 import { API_ENDPOINTS } from "../../constants/Api";
 import useFetch from "../../hooks/useFetch";
-import Claymorphism from 'react_claymorphism'
 
 interface SensorData {
   temperature: number;

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { FaCalendarAlt, FaMapMarkerAlt, FaLeaf } from 'react-icons/fa';
-import { EmblaCarousel } from '../components/SliderNews';
 
 interface NewsItem {
   id: number;

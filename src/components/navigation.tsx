@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
   Home,
   User,
-  Settings,
   Hourglass,
   MonitorCog,
   Menu,
@@ -11,7 +10,7 @@ import {
 } from "lucide-react";
 import { NavButton } from "./NavButton";
 import LogoutButton from "./LogoutButton";
-import ROUTES from "../constants/Routes";
+import ROUTES from "../constants/routes-v2";
 import ToggleDarkMode from "./DarkModeButton";
 
 const Sidebar = () => {

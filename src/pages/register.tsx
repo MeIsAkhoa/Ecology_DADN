@@ -6,7 +6,7 @@ import coverImage from "../assets/cover.png";
 import InputField from "../components/InputField";
 import { API_ENDPOINTS } from "../constants/Api";
 import useMutation from "../hooks/useMutation";
-import ROUTES from "../constants/Routes";
+import ROUTES from "../constants/routes-v2";
 
 // Schema validation với Zod
 const registerSchema = z

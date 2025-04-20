@@ -1,6 +1,6 @@
 import useFetch from "../../hooks/useFetch";
 import { API_ENDPOINTS } from "../../constants/Api";
-import { CogIcon, Thermometer, Droplets, Sun, Sprout } from "lucide-react";
+import {  Thermometer, Droplets, Sun, Sprout } from "lucide-react";
 
 interface Threshold {
   deviceType: string;
@@ -108,7 +108,7 @@ const ThresholdCard: React.FC<ThresholdCardProps> = ({
   bgColor,
   icon,
   textColor,
-  loading,
+  
 }) => {
   const formatValue = (value: number | null) => {
     if (value === null) return <span className="text-gray-500">Chưa đặt</span>;

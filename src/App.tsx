@@ -10,7 +10,7 @@ import CurrentData from "./pages/DataPage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import "./App.css";
-import ROUTES from "./constants/Routes";
+import ROUTES from "./constants/routes-v2";
 import News from "./pages/News";
 import { ThemeProvider } from "./components/provider/ThemeProvider";
 
