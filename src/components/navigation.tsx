@@ -108,11 +108,11 @@ const Sidebar = () => {
             label="Thông tin"
           />
 
-          <NavButton
+          {/* <NavButton
             to={ROUTES.SETTINGS}
             icon={<Settings className="w-5 h-5" />}
             label="Cài đặt"
-          />
+          /> */}
 
           <LogoutButton />
         </div>
