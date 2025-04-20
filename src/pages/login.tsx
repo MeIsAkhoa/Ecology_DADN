@@ -36,6 +36,7 @@ const Login = () => {
   });
 
   const onSubmit = async (data: LoginFormInputs) => {
+    console.log("Login data:", data);
     try {
       const response = await mutate(data);
       if (response?.code === 200) {
