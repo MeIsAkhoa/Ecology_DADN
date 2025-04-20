@@ -7,7 +7,7 @@ import InputField from "../components/InputField";
 import coverImage from "../assets/cover.png";
 import { API_ENDPOINTS } from "../constants/Api";
 import useMutation from "../hooks/useMutation";
-import ROUTES from "../constants/Routes";
+import ROUTES from "../constants/routes-v2";
 
 const loginSchema = z.object({
   username: z.string().min(6, "Username must be at least 6 characters"),
@@ -36,6 +36,7 @@ const Login = () => {
   });
 
   const onSubmit = async (data: LoginFormInputs) => {
+    console.log("Login data:", data);
     try {
       const response = await mutate(data);
       if (response?.code === 200) {

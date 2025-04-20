@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
 import Sidebar from "../components/Navigation";
-import ROUTES from "../constants/Routes";
+import ROUTES from "../constants/routes-v2";
 
 const MainLayout = () => {
   const navigate = useNavigate();

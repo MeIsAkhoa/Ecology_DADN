@@ -2,7 +2,8 @@ export const API_ENDPOINTS = {
     // User API
     USER_REGISTER: "/user/create",
     USER_PROFILE: "/user/profile",
-    LOGIN: "/login/token",
+    USER_UPDATE: "/user",
+    LOGIN: "/auth/token",
   
     // Sensor Data API
     SENSOR_LATEST: "/adafruit/latest",
