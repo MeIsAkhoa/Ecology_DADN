@@ -8,6 +8,7 @@ import Settings from "./pages/Setting";
 import Config from "./pages/Config";
 import CurrentData from "./pages/DataPage";
 import Login from "./pages/Login";
+import History from "./pages/History";
 import Register from "./pages/Register";
 import "./App.css";
 import ROUTES from "./constants/routes-v2";
@@ -28,6 +29,7 @@ const App = () => {
               <Route path={ROUTES.CONFIG} element={<Config />} />
               <Route path={ROUTES.CURRENT_DATA} element={<CurrentData />} />
               <Route path={ROUTES.NEWS} element={<News />} />
+              <Route path={ROUTES.HISTORY} element={<History />} />
             </Route>
 
             {/* Routes dùng layout cho Auth */}

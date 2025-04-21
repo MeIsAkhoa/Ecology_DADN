@@ -87,6 +87,11 @@ const Sidebar = () => {
           />
 
           <NavButton
+            to={ROUTES.HISTORY}
+            icon={<Hourglass className="w-5 h-5" />}
+            label="Lịch sử"
+          />
+          <NavButton
             to={ROUTES.CONFIG}
             icon={<MonitorCog className="w-5 h-5" />}
             label="Điều chỉnh"
