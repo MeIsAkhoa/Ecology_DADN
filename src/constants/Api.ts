@@ -6,6 +6,7 @@ export const API_ENDPOINTS = {
     LOGIN: "/auth/token",
   
     // Sensor Data API
+    SENSOR_DATA: "/adafruit/data",
     SENSOR_LATEST: "/adafruit/latest",
     SENSOR_TEMPERATURE: "/adafruit/data/temperature",
     SENSOR_HUMIDITY: "/adafruit/data/humidity",

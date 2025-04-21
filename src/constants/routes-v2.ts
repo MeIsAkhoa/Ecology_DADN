@@ -7,6 +7,7 @@ const ROUTES = {
     LOGIN: "/login",
     REGISTER: "/register",
     NEWS: "/news",
+    HISTORY: "/history",
   };
   
   export default ROUTES;
