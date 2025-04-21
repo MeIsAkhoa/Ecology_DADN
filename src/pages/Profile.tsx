@@ -236,7 +236,7 @@ const Profile: React.FC = () => {
                   name="phonenum"
                   value={formData.phonenum || ''}
                   onChange={handleInputChange}
-                  className="ml-12 w-full bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded px-3 py-1"
+                  className="ml-4 w-full bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded px-3 py-1"
                   placeholder="Nhập số điện thoại"
                 />
               ) : (
@@ -260,7 +260,7 @@ const Profile: React.FC = () => {
                   name="dob"
                   value={formatDateForInput(formData.dob || null)}
                   onChange={handleInputChange}
-                  className="ml-12 w-full bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded px-3 py-1"
+                  className="ml-4 w-full bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded px-3 py-1"
                 />
               ) : (
                 <p className="text-gray-700 dark:text-gray-300 pl-12">
@@ -290,7 +290,7 @@ const Profile: React.FC = () => {
                   name="gender"
                   value={formData.gender || ''}
                   onChange={handleInputChange}
-                  className="ml-12 w-full bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded px-3 py-1"
+                  className="ml-4 w-full bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded px-3 py-1"
                 >
                   <option value="">Chọn giới tính</option>
                   <option value="male">Nam</option>

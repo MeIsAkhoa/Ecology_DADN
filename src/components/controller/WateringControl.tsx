@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import api from "../../utils/baseURL"; // Import axios instance
 import wateringCan from "../../assets/watering.png";
 
@@ -7,8 +7,11 @@ const WateringControl: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const effectRan = useRef(false);
 
   useEffect(() => {
+    if (effectRan.current) return; // Bỏ qua lần chạy thứ 2 do StrictMode
+    effectRan.current = true;
     let timer: NodeJS.Timeout;
 
     if (isOn && timeLeft !== null) {
@@ -29,6 +32,7 @@ const WateringControl: React.FC = () => {
   }, [isOn, timeLeft]);
 
   const sendWaterPumpCommand = async (value: number) => {
+    console.log("API call with value:", value);
     setLoading(true);
     setError(null);
     try {
@@ -59,12 +63,20 @@ const WateringControl: React.FC = () => {
     <div className="p-4 bg-gradient-to-l from-green-100 to-green-250 rounded-lg">
       <div className="flex items-center justify-between bg-white p-4 rounded-lg shadow-md">
         <div className="flex items-center">
-          <img src={wateringCan} alt="Watering Can" className="w-10 h-10 mr-3" />
+          <img
+            src={wateringCan}
+            alt="Watering Can"
+            className="w-10 h-10 mr-3"
+          />
           <div>
             <p className="font-bold text-lg">Hệ thống Tưới nước</p>
             <p className="text-gray-700">
               Hệ thống hiện{" "}
-              <span className={`font-bold ${isOn ? "text-green-500" : "text-red-500"}`}>
+              <span
+                className={`font-bold ${
+                  isOn ? "text-green-500" : "text-red-500"
+                }`}
+              >
                 {isOn ? "ĐANG BẬT" : "ĐANG TẮT"}
               </span>
             </p>
@@ -72,7 +84,8 @@ const WateringControl: React.FC = () => {
               <p className="text-gray-700">
                 Thời gian còn lại:{" "}
                 <span className="font-bold">
-                  {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, "0")}
+                  {Math.floor(timeLeft / 60)}:
+                  {(timeLeft % 60).toString().padStart(2, "0")}
                 </span>
               </p>
             )}
@@ -83,7 +96,9 @@ const WateringControl: React.FC = () => {
           onClick={handleToggle}
           disabled={loading}
           className={`font-bold px-4 py-2 rounded-lg shadow-md ${
-            isOn ? "bg-red-500 text-white hover:bg-red-600" : "bg-green-500 text-white hover:bg-green-600"
+            isOn
+              ? "bg-red-500 text-white hover:bg-red-600"
+              : "bg-green-500 text-white hover:bg-green-600"
           }`}
         >
           {loading ? "Đang gửi..." : isOn ? "TẮT NGAY" : "BẬT NGAY"}

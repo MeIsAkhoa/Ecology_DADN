@@ -7,6 +7,7 @@ import {
   Menu,
   X,
   Newspaper,
+  History,
 } from "lucide-react";
 import { NavButton } from "./NavButton";
 import LogoutButton from "./LogoutButton";
@@ -88,7 +89,7 @@ const Sidebar = () => {
 
           <NavButton
             to={ROUTES.HISTORY}
-            icon={<Hourglass className="w-5 h-5" />}
+            icon={<History className="w-5 h-5" />}
             label="Lịch sử"
           />
           <NavButton
