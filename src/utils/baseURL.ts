@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Tạo instance axios với baseURL cố định
 const api = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "https://iot-project-hcmut.onrender.com",
   headers: {
     "Content-Type": "application/json",
   },
